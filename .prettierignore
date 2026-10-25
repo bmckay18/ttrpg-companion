@@ -1,0 +1,6 @@
+# Build outpt
+dist/
+coverage/
+
+# Dependencies
+node_modules/
