@@ -1,0 +1,32 @@
+<div class="content">
+    <h2>Campaigns</h2>
+    <main>
+        <section class="card-search">
+            <form>
+                <label for="search">Search:</label>
+                <input type="text">
+            </form>
+            <button>Create Campaign</button>
+        </section>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Created</th>
+                    <th>Last Modified</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(card of cardData; track card.id) {
+                <tr>
+                    <td>{{card.id}}</td>
+                    <td>{{card.title}}</td>
+                    <td>{{card.creationDate}}</td>
+                    <td>{{card.lastModifiedDate}}</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </main>
+</div>
