@@ -1,0 +1,11 @@
+nav {
+    background-color: var(--navigation-color);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0 1rem 1rem;
+    min-height: calc(100vh - 2rem - 2px - 18px); /* 100vh - the header height*/
+    min-width: 250px;
+    gap: 0.5rem;
+    border-right: var(--border-default);
+}
