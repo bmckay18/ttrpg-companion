@@ -2,3 +2,43 @@
     margin: 0 1rem;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    text-align: center;
+    border: 1px solid black;
+    border-left: none;
+    border-right: none;
+    padding: 0.5rem;
+    background-color: white;
+}
+
+th {
+    width: 25vw;
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.card-search {
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.card-search button {
+    margin-left: auto;
+}
+
+.card-search form {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+input {
+    width: 25vw;
+}

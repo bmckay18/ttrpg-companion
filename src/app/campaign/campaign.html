@@ -4,7 +4,8 @@
         <section class="card-search">
             <form>
                 <label for="search">Search:</label>
-                <input type="text">
+                <input #searchInput placeholder="Search campaigns" (input)="filterCampaigns(
+                    searchInput.value)">
             </form>
             <button>Create Campaign</button>
         </section>

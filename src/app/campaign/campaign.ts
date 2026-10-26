@@ -22,4 +22,8 @@ export class Campaign {
       lastModifiedDate: '16/05/2026'
     }
   ]
+
+  filterCampaigns(content: string) {
+    console.log(content);
+  }
 }
