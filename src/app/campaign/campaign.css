@@ -23,6 +23,11 @@ th {
     color: white;
 }
 
+tr:hover td {
+    background-color: rgb(240, 240, 240);
+    cursor: pointer;
+}
+
 .card-search {
     display: flex;
     margin-bottom: 1rem;
