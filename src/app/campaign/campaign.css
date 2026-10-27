@@ -28,17 +28,17 @@ tr:hover td {
     cursor: pointer;
 }
 
-.card-search {
+.campaign-search {
     display: flex;
     margin-bottom: 1rem;
     align-items: center;
 }
 
-.card-search button {
+.campaign-search button {
     margin-left: auto;
 }
 
-.card-search form {
+.search-bar {
     display: flex;
     gap: 1rem;
     align-items: center;

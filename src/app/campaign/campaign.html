@@ -1,12 +1,12 @@
 <div class="content">
     <h2>Campaigns</h2>
     <main>
-        <section class="card-search">
-            <form>
+        <section class="campaign-search">
+            <div class="search-bar">
                 <label for="search">Search:</label>
                 <input #searchInput placeholder="Search campaigns" (input)="filterCampaigns(
                     searchInput.value)">
-            </form>
+            </div>
             <button>Create Campaign</button>
         </section>
         <table>
@@ -19,12 +19,12 @@
                 </tr>
             </thead>
             <tbody>
-                @for(card of cardData; track card.id) {
+                @for(campaign of campaignData; track campaign.id) {
                 <tr>
-                    <td>{{card.id}}</td>
-                    <td>{{card.title}}</td>
-                    <td>{{card.creationDate}}</td>
-                    <td>{{card.lastModifiedDate}}</td>
+                    <td>{{campaign.id}}</td>
+                    <td>{{campaign.title}}</td>
+                    <td>{{campaign.creationDate}}</td>
+                    <td>{{campaign.lastModifiedDate}}</td>
                 </tr>
                 }
             </tbody>
