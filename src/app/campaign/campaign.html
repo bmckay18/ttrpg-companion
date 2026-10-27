@@ -4,8 +4,7 @@
         <section class="campaign-search">
             <div class="search-bar">
                 <label for="search">Search:</label>
-                <input #searchInput placeholder="Search campaigns" (input)="filterCampaigns(
-                    searchInput.value)">
+                <input #searchInput placeholder="Search campaigns" (input)="filterCampaigns(searchInput.value)">
             </div>
             <button>Create Campaign</button>
         </section>
@@ -19,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for(campaign of campaignData; track campaign.id) {
+                @for(campaign of campaigns$ | async; track campaign.id) {
                 <tr>
                     <td>{{campaign.id}}</td>
                     <td>{{campaign.title}}</td>
