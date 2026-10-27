@@ -14,9 +14,6 @@ export class Campaign {
   private searchTerms = new Subject<string>();
   campaignListService = inject(CampaignListService);
 
-  constructor() { 
-  }
-
   campaigns$ = this.searchTerms.pipe(
     startWith(''),
     debounceTime(500),
