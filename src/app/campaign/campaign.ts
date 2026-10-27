@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { ICampaign } from './campaign-interface';
 import { CampaignListService } from './campaign-list-service';
 import { debounceTime, distinctUntilChanged, startWith, Subject, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
@@ -20,7 +19,7 @@ export class Campaign {
 
   campaigns$ = this.searchTerms.pipe(
     startWith(''),
-    debounceTime(300),
+    debounceTime(500),
     distinctUntilChanged(),
     switchMap(searchTerm => this.campaignListService.getCampaignList(searchTerm))
   );
