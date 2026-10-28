@@ -1,41 +1,46 @@
 <div class="content">
-    <h2>Campaigns</h2>
-    <main>
-        <section class="campaign-search">
-            <div class="search-bar">
-                <label for="search">Search:</label>
-                <input #searchInput type="search" placeholder="Search campaigns" (input)="filterCampaigns(searchInput.value)">
-            </div>
-            <button (click)="modal.showModal()">Create Campaign</button>
-        </section>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Created</th>
-                    <th>Last Modified</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for(campaign of campaigns$ | async; track campaign.id) {
-                <tr>
-                    <td>{{campaign.id}}</td>
-                    <td>{{campaign.title}}</td>
-                    <td>{{campaign.creationDate}}</td>
-                    <td>{{campaign.lastModifiedDate}}</td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </main>
+  <h2>Campaigns</h2>
+  <main>
+    <section class="campaign-search">
+      <div class="search-bar">
+        <label for="search">Search:</label>
+        <input
+          #searchInput
+          type="search"
+          placeholder="Search campaigns"
+          (input)="filterCampaigns(searchInput.value)"
+        />
+      </div>
+      <button (click)="modal.showModal()">Create Campaign</button>
+    </section>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Created</th>
+          <th>Last Modified</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (campaign of campaigns$ | async; track campaign.id) {
+          <tr>
+            <td>{{ campaign.id }}</td>
+            <td>{{ campaign.title }}</td>
+            <td>{{ campaign.creationDate }}</td>
+            <td>{{ campaign.lastModifiedDate }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </main>
 </div>
 
 <dialog #modal>
-    <div class="create-campaign-modal">
-        <div class="modal-header">
-            <h3>Create Campaign</h3>
-        </div>
-        <app-new-campaign-form (campaignName)="createCampaign($event)" />
+  <div class="create-campaign-modal">
+    <div class="modal-header">
+      <h3>Create Campaign</h3>
     </div>
+    <app-new-campaign-form (campaignName)="createCampaign($event)" />
+  </div>
 </dialog>

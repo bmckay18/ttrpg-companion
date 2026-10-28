@@ -7,56 +7,56 @@ import { Observable, of } from 'rxjs';
 })
 export class CampaignListService {
   private mockCampaignData: ICampaign[] = [
-      {
-        title: 'Campaign 1',
-        id: 1,
-        creationDate: '13/01/2000',
-        lastModifiedDate: '28/10/2025'
-      },
-      {
-        title: 'The Falls of Dunleigh',
-        id: 2,
-        creationDate: '1/09/2018',
-        lastModifiedDate: '16/05/2026'
-      },
-      {
-        title: 'The Rise of The Dread Lord',
-        id: 3,
-        creationDate: '28/12/2025',
-        lastModifiedDate: '16/05/2026'
-      },
-      {
-        title: 'Skywalker: A New Hope',
-        id: 4,
-        creationDate: '28/12/2025',
-        lastModifiedDate: '16/05/2026'
-      }
-    ]
+    {
+      title: 'Campaign 1',
+      id: 1,
+      creationDate: '13/01/2000',
+      lastModifiedDate: '28/10/2025',
+    },
+    {
+      title: 'The Falls of Dunleigh',
+      id: 2,
+      creationDate: '1/09/2018',
+      lastModifiedDate: '16/05/2026',
+    },
+    {
+      title: 'The Rise of The Dread Lord',
+      id: 3,
+      creationDate: '28/12/2025',
+      lastModifiedDate: '16/05/2026',
+    },
+    {
+      title: 'Skywalker: A New Hope',
+      id: 4,
+      creationDate: '28/12/2025',
+      lastModifiedDate: '16/05/2026',
+    },
+  ];
 
-    getCampaignList(searchTerm: string): Observable<ICampaign[]> {
-      if (searchTerm.trim() === '') {
-        return of(this.mockCampaignData);
-      }
-
-      const filteredData = this.mockCampaignData.filter(campaign =>
-        campaign.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-
-      return of(filteredData);
+  getCampaignList(searchTerm: string): Observable<ICampaign[]> {
+    if (searchTerm.trim() === '') {
+      return of(this.mockCampaignData);
     }
 
-    createCampaign(title: string): void {
-      if (title.length < 5 || title == null) {
-        throw new Error('The title must be greater than 5 characters');        
-      }
+    const filteredData = this.mockCampaignData.filter((campaign) =>
+      campaign.title.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
 
-      const campaign: ICampaign = {
-        title: title,
-        id: this.mockCampaignData.length + 1,
-        creationDate: '10/05/2026',
-        lastModifiedDate: '10/05/2026'
-      }
+    return of(filteredData);
+  }
 
-      this.mockCampaignData.push(campaign);
+  createCampaign(title: string): void {
+    if (title.length < 5 || title == null) {
+      throw new Error('The title must be greater than 5 characters');
     }
+
+    const campaign: ICampaign = {
+      title: title,
+      id: this.mockCampaignData.length + 1,
+      creationDate: '10/05/2026',
+      lastModifiedDate: '10/05/2026',
+    };
+
+    this.mockCampaignData.push(campaign);
+  }
 }

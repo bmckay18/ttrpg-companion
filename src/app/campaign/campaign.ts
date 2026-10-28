@@ -4,7 +4,6 @@ import { debounceTime, distinctUntilChanged, startWith, Subject, switchMap } fro
 import { AsyncPipe } from '@angular/common';
 import { NewCampaignForm } from './new-campaign-form/new-campaign-form';
 
-
 @Component({
   selector: 'app-campaign',
   imports: [AsyncPipe, NewCampaignForm],
@@ -21,10 +20,10 @@ export class Campaign {
     startWith(''),
     debounceTime(500),
     distinctUntilChanged(),
-    switchMap(searchTerm => this.campaignListService.getCampaignList(searchTerm))
+    switchMap((searchTerm) => this.campaignListService.getCampaignList(searchTerm)),
   );
 
-  filterCampaigns(searchTerm: string) {    
+  filterCampaigns(searchTerm: string) {
     this.searchTerms.next(searchTerm);
   }
 
