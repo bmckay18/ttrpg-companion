@@ -44,6 +44,27 @@ tr:hover td {
     align-items: center;
 }
 
-input {
+.search-bar input {
     width: 25vw;
+}
+
+.create-campaign-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--accent-color);
+    color: white;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid black;
+}
+
+.modal-header h3 {
+    margin: 0.5rem;
 }

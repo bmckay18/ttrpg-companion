@@ -1,0 +1,23 @@
+.create-campaign-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.create-campaign-form button {
+    margin-bottom: 1rem;
+}
+
+.form-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    max-width: 90%;
+}
+
+form button:disabled {
+    background: grey;
+    border-color: black;
+    cursor:default;
+}

@@ -44,4 +44,19 @@ export class CampaignListService {
 
       return of(filteredData);
     }
+
+    createCampaign(title: string): void {
+      if (title.length < 5 || title == null) {
+        throw new Error('The title must be greater than 5 characters');        
+      }
+
+      const campaign: ICampaign = {
+        title: title,
+        id: this.mockCampaignData.length + 1,
+        creationDate: '10/05/2026',
+        lastModifiedDate: '10/05/2026'
+      }
+
+      this.mockCampaignData.push(campaign);
+    }
 }

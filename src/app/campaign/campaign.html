@@ -6,7 +6,7 @@
                 <label for="search">Search:</label>
                 <input #searchInput type="search" placeholder="Search campaigns" (input)="filterCampaigns(searchInput.value)">
             </div>
-            <button>Create Campaign</button>
+            <button (click)="modal.showModal()">Create Campaign</button>
         </section>
         <table>
             <thead>
@@ -30,3 +30,12 @@
         </table>
     </main>
 </div>
+
+<dialog #modal>
+    <div class="create-campaign-modal">
+        <div class="modal-header">
+            <h3>Create Campaign</h3>
+        </div>
+        <app-new-campaign-form (campaignName)="createCampaign($event)" />
+    </div>
+</dialog>
