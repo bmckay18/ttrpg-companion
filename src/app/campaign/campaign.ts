@@ -13,7 +13,7 @@ import { ICampaign } from './campaign-interface';
 })
 export class Campaign {
   campaignListService = inject(CampaignListService);
-  campaigns: Observable<ICampaign[]> = of([]);
+  campaigns$: Observable<ICampaign[]> = of([]);
 
   newCampaignModal = viewChild<ElementRef<HTMLDialogElement>>('modal');
   inputField = viewChild<ElementRef<HTMLInputElement>>('searchInput');
@@ -29,7 +29,7 @@ export class Campaign {
   }
 
   searchCampaigns(searchTerm: string) {
-    this.campaigns = this.campaignListService.getCampaignList(searchTerm);
+    this.campaigns$ = this.campaignListService.getCampaignList(searchTerm);
   }
 
   resetSearch() {
