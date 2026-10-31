@@ -16,6 +16,7 @@ export class Campaign {
   campaigns: Observable<ICampaign[]> = of([]);
 
   newCampaignModal = viewChild<ElementRef<HTMLDialogElement>>('modal');
+  inputField = viewChild<ElementRef<HTMLInputElement>>('searchInput');
 
   constructor() {
     this.searchCampaigns('');
@@ -29,5 +30,15 @@ export class Campaign {
 
   searchCampaigns(searchTerm: string) {
     this.campaigns = this.campaignListService.getCampaignList(searchTerm);
+  }
+
+  resetSearch() {
+    if (!this.inputField()) {
+      return;
+    }
+
+    this.searchCampaigns('');
+
+    this.inputField()!.nativeElement.value = '';
   }
 }

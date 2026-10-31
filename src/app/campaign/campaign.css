@@ -28,7 +28,7 @@ th {
 }
 
 tr:hover td {
-  background-color: rgb(240, 240, 240);
+  background-color: var(--secondary-hover-color);
   cursor: pointer;
 }
 
@@ -81,5 +81,5 @@ tr:hover td {
 }
 
 .search-button:hover {
-  background-color: rgba(246, 255, 239, 0.555);
+  background-color: var(--secondary-hover-color);
 }

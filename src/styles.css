@@ -3,6 +3,7 @@
   --primary-colour: #e4ede5;
   --navigation-color: #29483b;
   --accent-color: #55876a;
+  --secondary-hover-color: rgba(246, 255, 239, 0.555);
 }
 
 * {

@@ -11,7 +11,7 @@
           class="search-field"
         />
         <button class="search-button" (click)="searchCampaigns(searchInput.value)">Search</button>
-        <button class="search-button" (click)="searchCampaigns('')">Reset</button>
+        <button class="search-button" (click)="resetSearch()" id="reset-button">Reset</button>
       </div>
       <button (click)="modal.showModal()" class="create-campaign-button">Create Campaign</button>
     </section>
