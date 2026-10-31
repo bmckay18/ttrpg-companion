@@ -1,3 +1,7 @@
+:host {
+  --input-vertical-padding: 0.3rem;
+}
+
 .content {
   margin: 0 1rem;
 }
@@ -34,7 +38,7 @@ tr:hover td {
   align-items: center;
 }
 
-.campaign-search button {
+.create-campaign-button {
   margin-left: auto;
 }
 
@@ -44,8 +48,9 @@ tr:hover td {
   align-items: center;
 }
 
-.search-bar input {
+.search-field {
   width: 25vw;
+  padding: var(--input-vertical-padding) 0.25rem;
 }
 
 .create-campaign-modal {
@@ -67,4 +72,14 @@ tr:hover td {
 
 .modal-header h3 {
   margin: 0.5rem;
+}
+
+.search-button {
+  background-color: white;
+  color: var(--accent-color);
+  padding: var(--input-vertical-padding) 1rem;
+}
+
+.search-button:hover {
+  background-color: rgba(246, 255, 239, 0.555);
 }

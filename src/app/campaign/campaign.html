@@ -8,10 +8,12 @@
           #searchInput
           type="search"
           placeholder="Search campaigns"
-          (input)="filterCampaigns(searchInput.value)"
+          class="search-field"
         />
+        <button class="search-button" (click)="searchCampaigns(searchInput.value)">Search</button>
+        <button class="search-button" (click)="searchCampaigns('')">Reset</button>
       </div>
-      <button (click)="modal.showModal()">Create Campaign</button>
+      <button (click)="modal.showModal()" class="create-campaign-button">Create Campaign</button>
     </section>
     <table>
       <thead>
@@ -23,7 +25,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (campaign of campaigns$ | async; track campaign.id) {
+        @for (campaign of campaigns | async; track campaign.id) {
           <tr>
             <td>{{ campaign.id }}</td>
             <td>{{ campaign.title }}</td>
