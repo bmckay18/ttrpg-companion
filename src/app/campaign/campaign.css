@@ -1,0 +1,85 @@
+:host {
+  --input-vertical-padding: 0.3rem;
+}
+
+.content {
+  margin: 0 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: center;
+  border: 1px solid black;
+  border-left: none;
+  border-right: none;
+  padding: 0.5rem;
+  background-color: white;
+}
+
+th {
+  width: 25vw;
+  background-color: var(--accent-color);
+  color: white;
+}
+
+tr:hover td {
+  background-color: var(--secondary-hover-color);
+  cursor: pointer;
+}
+
+.campaign-search {
+  display: flex;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.create-campaign-button {
+  margin-left: auto;
+}
+
+.search-bar {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.search-field {
+  width: 25vw;
+  padding: var(--input-vertical-padding) 0.25rem;
+}
+
+.create-campaign-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: var(--accent-color);
+  color: white;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid black;
+}
+
+.modal-header h3 {
+  margin: 0.5rem;
+}
+
+.search-button {
+  background-color: white;
+  color: var(--accent-color);
+  padding: var(--input-vertical-padding) 1rem;
+}
+
+.search-button:hover {
+  background-color: var(--secondary-hover-color);
+}

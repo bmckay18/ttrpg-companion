@@ -1,8 +1,8 @@
 header {
-    display: flex;
-    justify-content: center;
-    background-color: var(--accent-color);
-    border-bottom: var(--border-default);
-    padding: 1rem 0;
-    color: white;
+  display: flex;
+  justify-content: center;
+  background-color: var(--accent-color);
+  border-bottom: var(--border-default);
+  padding: 1rem 0;
+  color: white;
 }

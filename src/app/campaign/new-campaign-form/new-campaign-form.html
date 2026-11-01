@@ -1,0 +1,14 @@
+<form #campaignForm="ngForm" class="create-campaign-form" (ngSubmit)="submitForm(campaignForm)">
+  <section class="form-fields">
+    <label for="title">Campaign Name:</label>
+    <input
+      id="title"
+      placeholder="Enter Campaign Name"
+      [(ngModel)]="title"
+      name="title"
+      required
+      minlength="5"
+    />
+  </section>
+  <button type="submit" [disabled]="campaignForm.invalid">Create Campaign</button>
+</form>

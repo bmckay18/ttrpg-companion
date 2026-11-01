@@ -1,17 +1,40 @@
 :root {
-    --border-default: 2px solid black;
-    --primary-colour: #E4EDE5;
-    --navigation-color: #29483B;
-    --accent-color: #55876A;
+  --border-default: 2px solid black;
+  --primary-colour: #e4ede5;
+  --navigation-color: #29483b;
+  --accent-color: #55876a;
+  --secondary-hover-color: rgba(246, 255, 239, 0.555);
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: var(--primary-colour);
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--primary-colour);
+}
+
+button {
+  padding: 0.5rem 1rem;
+  color: white;
+  background-color: var(--accent-color);
+  border: 2px solid #125612;
+  border-radius: 6px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:active {
+  background-color: #286340;
+}
+
+dialog {
+  border: 1px solid black;
+  border-radius: 6px;
+  padding: 0;
 }
