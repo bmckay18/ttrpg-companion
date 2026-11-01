@@ -1,0 +1,29 @@
+.content {
+    margin: 0 1rem;
+}
+
+.tab-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.tab-item {
+    text-decoration: none;
+    border: 2px solid var(--accent-color);
+    background-color: white;
+    color: var(--accent-color);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    box-shadow: 1px 1px 1px 1px lightgrey;
+}
+
+.tab-item:hover {
+    background-color: var(--secondary-hover-color);
+}
+
+.active,
+.tab-item.active:hover {
+    background-color: var(--accent-color);
+    color: white;
+    border: 2px solid var(--navigation-color);
+}

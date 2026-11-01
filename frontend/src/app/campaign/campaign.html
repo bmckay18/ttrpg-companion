@@ -21,7 +21,7 @@
       </thead>
       <tbody>
         @for (campaign of campaigns$ | async; track campaign.id) {
-          <tr>
+          <tr (click)="openCampaign(campaign.id)">
             <td>{{ campaign.id }}</td>
             <td>{{ campaign.title }}</td>
             <td>{{ campaign.creationDate }}</td>

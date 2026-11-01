@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { NewCampaignForm } from './new-campaign-form/new-campaign-form';
 import { ICampaign } from './campaign-interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-campaign',
@@ -13,6 +14,7 @@ import { ICampaign } from './campaign-interface';
 })
 export class Campaign {
   campaignListService = inject(CampaignListService);
+  router = inject(Router);
   campaigns$: Observable<ICampaign[]> = of([]);
 
   newCampaignModal = viewChild<ElementRef<HTMLDialogElement>>('modal');
@@ -40,5 +42,9 @@ export class Campaign {
     this.searchCampaigns('');
 
     this.inputField()!.nativeElement.value = '';
+  }
+
+  openCampaign(id: number) {
+    this.router.navigate(['/campaigns', id]);
   }
 }
