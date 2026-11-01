@@ -37,10 +37,16 @@ describe('Campaign', () => {
 
       expect(mockCampaignListService.getCampaignList).toHaveBeenCalledWith('dunleigh');
     });
+
+    it('should call the service with trimmed and lower case search term', () => {
+      component.searchCampaigns(' Dunleigh ');
+
+      expect(mockCampaignListService.getCampaignList).toHaveBeenCalledWith('dunleigh');
+    })
   });
 
   describe('createCampaign', () => {
-    it('should call service with campaign name', () => {
+    it('should call the service with campaign name', () => {
       fixture.detectChanges();
 
       const modal = component.newCampaignModal()?.nativeElement;
@@ -53,6 +59,20 @@ describe('Campaign', () => {
 
       expect(mockCampaignListService.createCampaign).toHaveBeenCalledWith('valor');
     });
+
+    it('should call the service with trimmed and lower case campaign name', () => {
+      fixture.detectChanges();
+
+      const modal = component.newCampaignModal()?.nativeElement;
+
+      if (modal) {
+        modal.close = vi.fn();
+      }
+
+      component.createCampaign(' Valor ');
+
+      expect(mockCampaignListService.createCampaign).toHaveBeenCalledWith('valor');
+    })
   });
 
   describe('resetSearch', () => {
