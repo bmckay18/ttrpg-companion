@@ -23,13 +23,13 @@ export class Campaign {
   }
 
   createCampaign(campaignName: string) {
-    this.campaignListService.createCampaign(campaignName);
+    this.campaignListService.createCampaign(campaignName.trim().toLowerCase());
 
     this.newCampaignModal()?.nativeElement.close();
   }
 
   searchCampaigns(searchTerm: string) {
-    this.campaigns$ = this.campaignListService.getCampaignList(searchTerm);
+    this.campaigns$ = this.campaignListService.getCampaignList(searchTerm.trim().toLowerCase());
   }
 
   resetSearch() {
