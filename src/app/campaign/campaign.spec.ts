@@ -42,7 +42,7 @@ describe('Campaign', () => {
       component.searchCampaigns(' Dunleigh ');
 
       expect(mockCampaignListService.getCampaignList).toHaveBeenCalledWith('dunleigh');
-    })
+    });
   });
 
   describe('createCampaign', () => {
@@ -72,7 +72,7 @@ describe('Campaign', () => {
       component.createCampaign(' Valor ');
 
       expect(mockCampaignListService.createCampaign).toHaveBeenCalledWith('valor');
-    })
+    });
   });
 
   describe('resetSearch', () => {
