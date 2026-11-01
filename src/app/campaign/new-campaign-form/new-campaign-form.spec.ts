@@ -26,7 +26,7 @@ describe('NewCampaignForm', () => {
     it('should output the title to the parent component', () => {
       component.title = 'Rise of Dread';
 
-      const mockForm = {resetForm: vi.fn()} as unknown as NgForm;
+      const mockForm = { resetForm: vi.fn() } as unknown as NgForm;
 
       outputToObservable(component.campaignName).subscribe((value) => {
         expect(value).toBe('Rise of Dread');
@@ -35,6 +35,6 @@ describe('NewCampaignForm', () => {
       component.submitForm(mockForm);
 
       expect(mockForm.resetForm).toHaveBeenCalled();
-    })
-  })
+    });
+  });
 });

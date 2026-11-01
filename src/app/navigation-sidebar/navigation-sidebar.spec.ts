@@ -6,7 +6,7 @@ import { RouterTestingHarness } from '@angular/router/testing';
 import { Component } from '@angular/core';
 
 @Component({
-  template: '<h1>Campaigns</h1>'
+  template: '<h1>Campaigns</h1>',
 })
 class MockCampaigns {}
 
@@ -18,11 +18,7 @@ describe('NavigationSidebar', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [NavigationSidebar],
-      providers: [
-        provideRouter([
-          {path: 'campaigns', component: MockCampaigns}
-        ]),
-      ]
+      providers: [provideRouter([{ path: 'campaigns', component: MockCampaigns }])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavigationSidebar);
@@ -40,5 +36,5 @@ describe('NavigationSidebar', () => {
     await harness.navigateByUrl('/campaigns');
 
     expect(harness.routeNativeElement?.textContent).toContain('Campaigns');
-  })
+  });
 });

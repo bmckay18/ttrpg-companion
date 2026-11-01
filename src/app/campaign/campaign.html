@@ -4,12 +4,7 @@
     <section class="campaign-search">
       <div class="search-bar">
         <label for="search">Search:</label>
-        <input
-          #searchInput
-          type="search"
-          placeholder="Search campaigns"
-          class="search-field"
-        />
+        <input #searchInput type="search" placeholder="Search campaigns" class="search-field" />
         <button class="search-button" (click)="searchCampaigns(searchInput.value)">Search</button>
         <button class="search-button" (click)="resetSearch()" id="reset-button">Reset</button>
       </div>

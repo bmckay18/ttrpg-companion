@@ -1,6 +1,6 @@
 import { Component, ElementRef, inject, viewChild } from '@angular/core';
 import { CampaignListService } from './campaign-list-service';
-import { debounceTime, distinctUntilChanged, Observable, of, startWith, Subject, switchMap } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { NewCampaignForm } from './new-campaign-form/new-campaign-form';
 import { ICampaign } from './campaign-interface';

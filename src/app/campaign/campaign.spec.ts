@@ -9,15 +9,13 @@ describe('Campaign', () => {
   let fixture: ComponentFixture<Campaign>;
   const mockCampaignListService = {
     getCampaignList: vi.fn().mockReturnValue(of([])),
-    createCampaign: vi.fn()
-  }
+    createCampaign: vi.fn(),
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Campaign],
-      providers: [
-        { provide: CampaignListService, useValue: mockCampaignListService }
-      ]
+      providers: [{ provide: CampaignListService, useValue: mockCampaignListService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Campaign);
@@ -55,7 +53,7 @@ describe('Campaign', () => {
 
       expect(mockCampaignListService.createCampaign).toHaveBeenCalledWith('valor');
     });
-  })
+  });
 
   describe('resetSearch', () => {
     it('should clear the search input and return all campaigns', () => {
