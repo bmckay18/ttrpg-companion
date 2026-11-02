@@ -1,5 +1,10 @@
+:host {
+    width: 100%;
+}
+
 .content {
     margin: 0 1rem;
+    width: 100%
 }
 
 .tab-group {
@@ -26,4 +31,9 @@
     background-color: var(--accent-color);
     color: white;
     border: 2px solid var(--navigation-color);
+}
+
+.sub-content {
+    display: flex;
+    justify-content: center;
 }

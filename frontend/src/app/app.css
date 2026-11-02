@@ -1,3 +1,9 @@
 .content-layout {
   display: flex;
 }
+
+.main-content {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
