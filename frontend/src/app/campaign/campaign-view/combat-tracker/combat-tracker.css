@@ -11,3 +11,17 @@
     gap: 1rem;
     justify-content: flex-end;
 }
+
+.form-section {
+    padding: 1rem;
+}
+
+.form-header-text {
+    margin: 0;
+    background-color: var(--accent-color);
+    display: flex;
+    justify-content: center;
+    color: white;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid black;
+}

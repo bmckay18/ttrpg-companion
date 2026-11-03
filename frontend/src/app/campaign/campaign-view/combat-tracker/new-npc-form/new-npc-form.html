@@ -1,0 +1,11 @@
+<form [formGroup]="npcForm" (ngSubmit)="onSubmit()" class="new-npc-form">
+    <div class="form-fields">
+        <label for="name">Name:</label>
+        <input type="string" id="name" formControlName="name">
+
+        <label for="hp">HP:</label>
+        <input id="hp" type="number" formControlName="hp">
+    </div>
+
+    <button type="submit" class="submit-button" [disabled]="npcForm.invalid">Create</button>
+</form>

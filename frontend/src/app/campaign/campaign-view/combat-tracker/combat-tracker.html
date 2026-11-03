@@ -1,6 +1,6 @@
 <section class="control-container">
     <button class="outline">Update HP</button>
-    <button>Add New NPC</button>
+    <button (click)="modal.showModal()">Add New NPC</button>
 </section>
 
 <section class="card-section">
@@ -8,3 +8,10 @@
         <app-npc-card [npcData]="npc" />
     }
 </section>
+
+<dialog #modal>
+    <h3 class="form-header-text">New NPC</h3>
+    <div class="form-section">
+        <app-new-npc-form (npcDetails)="createNewNpc($event)"/>
+    </div>
+</dialog>

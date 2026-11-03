@@ -1,14 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, viewChild } from '@angular/core';
 import { NpcCard } from './npc-card/npc-card';
 import { INpc } from './interfaces/npc';
+import { NewNpcForm } from './new-npc-form/new-npc-form';
+import { INewNpcFormDetails } from './new-npc-form/new-npc-form-details';
 
 @Component({
   selector: 'app-combat-tracker',
-  imports: [NpcCard],
+  imports: [NpcCard, NewNpcForm],
   templateUrl: './combat-tracker.html',
   styleUrl: './combat-tracker.css',
 })
 export class CombatTracker {
+  newNpcDialog = viewChild<ElementRef<HTMLDialogElement>>('modal');
+
   mockNpcData: INpc[] = [
     {
       id: 1,
@@ -59,4 +63,17 @@ export class CombatTracker {
       maxHp: 150
     },
   ];
+
+  createNewNpc(npcDetails:INewNpcFormDetails) {
+    const npc: INpc = {
+      name: npcDetails.name,
+      maxHp: Number(npcDetails.hp),
+      currentHp: Number(npcDetails.hp),
+      id: this.mockNpcData.length + 1
+    }
+
+    this.mockNpcData.push(npc);
+
+    this.newNpcDialog()?.nativeElement.close();
+  }
 }
