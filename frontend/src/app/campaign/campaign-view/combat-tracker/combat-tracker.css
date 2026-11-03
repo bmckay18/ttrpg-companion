@@ -1,0 +1,13 @@
+.card-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.control-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}

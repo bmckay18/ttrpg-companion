@@ -1,4 +1,9 @@
-<section>
+<section class="control-container">
+    <button class="outline">Update HP</button>
+    <button>Add New NPC</button>
+</section>
+
+<section class="card-section">
     @for (npc of mockNpcData; track npc.id) {
         <app-npc-card [npcData]="npc" />
     }

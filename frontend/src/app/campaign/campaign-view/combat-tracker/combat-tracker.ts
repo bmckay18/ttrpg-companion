@@ -34,5 +34,29 @@ export class CombatTracker {
       currentHp: 125,
       maxHp: 150
     },
+    {
+      id: 1,
+      name: 'Jonathan The Barbarian',
+      currentHp: 125,
+      maxHp: 150
+    },
+    {
+      id: 2,
+      name: 'Jonathan The Barbarian',
+      currentHp: 125,
+      maxHp: 150
+    },
+    {
+      id: 3,
+      name: 'Jonathan The Barbarian',
+      currentHp: 125,
+      maxHp: 150
+    },
+    {
+      id: 4,
+      name: 'Jonathan The Barbarian',
+      currentHp: 125,
+      maxHp: 150
+    },
   ];
 }
