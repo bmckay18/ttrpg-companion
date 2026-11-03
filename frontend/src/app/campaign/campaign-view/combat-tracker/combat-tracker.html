@@ -1,1 +1,5 @@
-<app-npc-card></app-npc-card>
+<section>
+    @for (npc of mockNpcData; track npc.id) {
+        <app-npc-card [npcData]="npc" />
+    }
+</section>

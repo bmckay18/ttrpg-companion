@@ -33,6 +33,25 @@ button:active {
   background-color: #286340;
 }
 
+button.delete {
+  color: red;
+  background-color: white;
+  border-color: red;
+}
+
+button.delete:hover {
+  background-color: rgb(255, 243, 243);
+}
+
+button.outline {
+  color: var(--accent-color);
+  background-color: white;
+}
+
+button.outline:hover {
+  background-color: rgb(246, 255, 239);
+}
+
 dialog {
   border: 1px solid black;
   border-radius: 6px;

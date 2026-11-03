@@ -1,5 +1,9 @@
 <div class="card">
-    <h3 class="name">Jonathan The Barbarian of Great Britain</h3>
-    <p>HP: 150 / 200</p>
+    <h3 class="name">{{npcData().name}}</h3>
+    <p>HP: {{npcData().currentHp}} / {{npcData().maxHp}}</p>
     <input placeholder="Enter damage received" type="number">
+    <div class="button-container">
+        <button class="outline">View</button>
+        <button class="delete">Delete</button>
+    </div>
 </div>

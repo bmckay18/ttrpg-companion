@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { INpc } from '../interfaces/npc';
 
 @Component({
   selector: 'app-npc-card',
@@ -6,4 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './npc-card.html',
   styleUrl: './npc-card.css',
 })
-export class NpcCard {}
+export class NpcCard {
+  npcData = input.required<INpc>();
+}
