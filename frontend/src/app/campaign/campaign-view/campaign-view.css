@@ -4,7 +4,6 @@
 
 .content {
     margin: 0 1rem;
-    width: 100%
 }
 
 .tab-group {
@@ -24,6 +23,11 @@
 
 .tab-item:hover {
     background-color: var(--secondary-hover-color);
+}
+
+.separator {
+    color: var(--accent-color);
+    margin-top: 1rem;
 }
 
 .active,
