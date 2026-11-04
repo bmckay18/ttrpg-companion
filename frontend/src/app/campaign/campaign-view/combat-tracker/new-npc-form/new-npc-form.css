@@ -15,6 +15,11 @@
     text-align: right;
 }
 
+.form-fields input.ng-invalid.ng-dirty {
+    border: 2px solid red;
+}
+
 .submit-button {
     align-self: flex-end;
 }
+
