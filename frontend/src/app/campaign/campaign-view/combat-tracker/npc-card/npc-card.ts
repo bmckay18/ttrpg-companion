@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { INpc } from '../interfaces/npc';
-import { INpcHpChange } from './npc-hp-change';
+import { INpcHpChange } from '../interfaces/npc-hp-change';
 
 @Component({
   selector: 'app-npc-card',

@@ -1,6 +1,6 @@
 import { Component, ElementRef, viewChild } from '@angular/core';
 import { NpcCard } from './npc-card/npc-card';
-import { INpcHpChange } from './npc-card/npc-hp-change';
+import { INpcHpChange } from './interfaces/npc-hp-change';
 import { INpc } from './interfaces/npc';
 import { NewNpcForm } from './new-npc-form/new-npc-form';
 import { INewNpcFormDetails } from './new-npc-form/new-npc-form-details';
