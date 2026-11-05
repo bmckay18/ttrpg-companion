@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { INpc } from '../interfaces/npc';
-import { IHpChangeDto } from '../hp-change-dto';
+import { IHpChangeDto } from '../interfaces/hp-change-dto';
 
 @Injectable({
   providedIn: 'root',

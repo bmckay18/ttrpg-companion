@@ -5,7 +5,7 @@ import { INpc } from './interfaces/npc';
 import { NewNpcForm } from './new-npc-form/new-npc-form';
 import { INewNpcFormDetails } from './new-npc-form/new-npc-form-details';
 import { CombatTrackerService } from './services/combat-tracker-service';
-import { IHpChangeDto } from './hp-change-dto';
+import { IHpChangeDto } from './interfaces/hp-change-dto';
 
 @Component({
   selector: 'app-combat-tracker',
