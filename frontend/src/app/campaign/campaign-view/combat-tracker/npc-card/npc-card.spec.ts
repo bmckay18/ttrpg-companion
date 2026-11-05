@@ -91,5 +91,17 @@ describe('NpcCard', () => {
 
       expect(input.value).toBe('');
     })
+  });
+
+  describe('isDeleted', () => {
+    it('should emit ID when isDeleted is emitted', () => {
+      const emitSpy = vi.fn();
+
+      component.isDeleted.subscribe(emitSpy);
+
+      component.isDeleted.emit(5);
+
+      expect(emitSpy).toHaveBeenCalledWith(5);
+    })
   })
 });
