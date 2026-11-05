@@ -63,6 +63,7 @@ export class CombatTracker {
     } as IHpChangeDto))
 
     this.combatTrackerService.updateNpcHp(payload);
+    this.resetFields();
     this.refreshData();
   }
 
