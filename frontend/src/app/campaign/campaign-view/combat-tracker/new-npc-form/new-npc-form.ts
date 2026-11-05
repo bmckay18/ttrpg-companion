@@ -15,7 +15,6 @@ export class NewNpcForm {
     ]}),
     hp: new FormControl('', {nonNullable: true, validators: [
       Validators.required,
-      Validators.min(1)
     ]})
   });
 
