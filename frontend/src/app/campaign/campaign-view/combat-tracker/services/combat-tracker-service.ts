@@ -68,4 +68,8 @@ export class CombatTrackerService {
     updateNpcHp(hpChangedList: IHpChangeDto[]) {
       console.log(hpChangedList);
     }
+
+    deleteNpc(id: number) {
+      console.log(id);
+    }
 }

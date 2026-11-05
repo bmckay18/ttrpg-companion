@@ -6,7 +6,11 @@
 
 <section class="card-section">
     @for (npc of npcData; track npc.id) {
-        <app-npc-card [npcData]="npc" (hpChanged)="updateTrackedHpList($event)" [resetTrigger]="resetCounter"/>
+        <app-npc-card 
+        [npcData]="npc" 
+        (hpChanged)="updateTrackedHpList($event)" 
+        [resetTrigger]="resetCounter"
+        (isDeleted)="deleteNpc($event)"/>
     }
 </section>
 

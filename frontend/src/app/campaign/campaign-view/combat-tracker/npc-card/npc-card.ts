@@ -12,6 +12,7 @@ export class NpcCard {
   npcData = input.required<INpc>();
   resetTrigger = input(0);
   hpChanged = output<INpcHpChange>();
+  isDeleted = output<number>();
 
   inputField = viewChild<ElementRef<HTMLInputElement>>('hpChangedField');
 

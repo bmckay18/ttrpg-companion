@@ -4,6 +4,6 @@
     <input placeholder="Enter damage received" type="text" #hpChangedField (input)="updateHp(hpChangedField.value)">
     <div class="button-container">
         <button class="outline">View</button>
-        <button class="delete">Remove</button>
+        <button class="delete" (click)="isDeleted.emit(npcData().id)">Remove</button>
     </div>
 </div>

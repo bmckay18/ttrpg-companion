@@ -71,4 +71,9 @@ export class CombatTracker {
     this.resetCounter++;
     this.pendingHpChanges = {};
   }
+
+  deleteNpc(id: number) {
+    this.combatTrackerService.deleteNpc(id);
+    this.refreshData();
+  }
 }
