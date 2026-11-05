@@ -5,7 +5,7 @@
 
 <section class="card-section">
     @for (npc of mockNpcData; track npc.id) {
-        <app-npc-card [npcData]="npc" (hpChanged)="updateHpChangeList($event)"/>
+        <app-npc-card [npcData]="npc" (hpChanged)="updateTrackedHpList($event)"/>
     }
 </section>
 

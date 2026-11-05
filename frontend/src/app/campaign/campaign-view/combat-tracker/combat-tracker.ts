@@ -79,7 +79,7 @@ export class CombatTracker {
     this.newNpcDialog()?.nativeElement.close();
   }
 
-  updateHpChangeList(payload: INpcHpChange) {
+  updateTrackedHpList(payload: INpcHpChange) {
     this.pendingHpChanges[payload.id] = payload.hpChangeAmount;
 
     console.log(this.pendingHpChanges);
