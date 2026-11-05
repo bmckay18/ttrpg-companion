@@ -1,5 +1,6 @@
 import { Component, ElementRef, viewChild } from '@angular/core';
 import { NpcCard } from './npc-card/npc-card';
+import { INpcHpChange } from './npc-card/npc-hp-change';
 import { INpc } from './interfaces/npc';
 import { NewNpcForm } from './new-npc-form/new-npc-form';
 import { INewNpcFormDetails } from './new-npc-form/new-npc-form-details';
@@ -12,6 +13,7 @@ import { INewNpcFormDetails } from './new-npc-form/new-npc-form-details';
 })
 export class CombatTracker {
   newNpcDialog = viewChild<ElementRef<HTMLDialogElement>>('modal');
+  pendingHpChanges: Record<number, number | null> = {};
 
   mockNpcData: INpc[] = [
     {
@@ -75,5 +77,11 @@ export class CombatTracker {
     this.mockNpcData.push(npc);
 
     this.newNpcDialog()?.nativeElement.close();
+  }
+
+  updateHpChangeList(payload: INpcHpChange) {
+    this.pendingHpChanges[payload.id] = payload.hpChangeAmount;
+
+    console.log(this.pendingHpChanges);
   }
 }
