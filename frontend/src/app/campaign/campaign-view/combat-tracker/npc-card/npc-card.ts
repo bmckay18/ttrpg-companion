@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, effect, ElementRef, input, output, viewChild } from '@angular/core';
 import { INpc } from '../interfaces/npc';
 import { INpcHpChange } from '../interfaces/npc-hp-change';
 
@@ -10,7 +10,10 @@ import { INpcHpChange } from '../interfaces/npc-hp-change';
 })
 export class NpcCard {
   npcData = input.required<INpc>();
+  resetTrigger = input(0);
   hpChanged = output<INpcHpChange>();
+
+  inputField = viewChild<ElementRef<HTMLInputElement>>('hpChangedField');
 
   updateHp(amount: string) {
     let parsedNumber: number | null = Number(amount);
@@ -23,6 +26,12 @@ export class NpcCard {
       id: this.npcData().id,
       hpChangeAmount: parsedNumber
     });
+  }
+
+  ngOnChanges() {
+    if (this.inputField()) {
+        this.inputField()!.nativeElement.value = '';
+      }
   }
 }
 

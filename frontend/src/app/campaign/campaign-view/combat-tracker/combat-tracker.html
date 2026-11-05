@@ -1,11 +1,12 @@
 <section class="control-container">
+    <button class="outline" (click)="resetFields()">Clear Fields</button>
     <button class="outline" (click)="submitHpChanges()">Update HP</button>
     <button (click)="modal.showModal()">Add New NPC</button>
 </section>
 
 <section class="card-section">
     @for (npc of npcData; track npc.id) {
-        <app-npc-card [npcData]="npc" (hpChanged)="updateTrackedHpList($event)"/>
+        <app-npc-card [npcData]="npc" (hpChanged)="updateTrackedHpList($event)" [resetTrigger]="resetCounter"/>
     }
 </section>
 

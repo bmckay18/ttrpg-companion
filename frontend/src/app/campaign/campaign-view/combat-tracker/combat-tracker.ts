@@ -16,12 +16,13 @@ import { IHpChangeDto } from './hp-change-dto';
 export class CombatTracker {
   newNpcDialog = viewChild<ElementRef<HTMLDialogElement>>('modal');
   pendingHpChanges: Record<number, number> = {}
+  resetCounter = 0;
 
   combatTrackerService = inject(CombatTrackerService);
 
   npcData: INpc[] = []
 
-  constructor() {
+  ngOnInit() {
     this.refreshData();
   }
 
@@ -62,5 +63,11 @@ export class CombatTracker {
     } as IHpChangeDto))
 
     this.combatTrackerService.updateNpcHp(payload);
+    this.refreshData();
+  }
+
+  resetFields() {
+    this.resetCounter++;
+    this.pendingHpChanges = {};
   }
 }
