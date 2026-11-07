@@ -43,7 +43,7 @@ jobs:
           path: dist/ttrpg-companion-app/browser
   
   deploy:
-    runs-on: ubunut-latest
+    runs-on: ubuntu-latest
 
     permissions:
       contents: read
