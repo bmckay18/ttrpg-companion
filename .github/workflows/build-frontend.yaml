@@ -61,7 +61,7 @@ jobs:
           path: dist
         
       - name: Deploy to Cloudflare
-        uses: cloudflare/wrangler-actions@v4
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN}}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID}}
