@@ -8,11 +8,11 @@ describe('NpcCard', () => {
   let component: NpcCard;
   let fixture: ComponentFixture<NpcCard>;
 
-  let mockNpc: INpc = {
+  const mockNpc: INpc = {
     id: 1,
     name: 'James',
     currentHp: 5,
-    maxHp: 10
+    maxHp: 10,
   };
 
   beforeEach(async () => {
@@ -39,7 +39,7 @@ describe('NpcCard', () => {
 
       const expectedResult: INpcHpChange = {
         id: 1,
-        hpChangeAmount: 15
+        hpChangeAmount: 15,
       };
 
       component.hpChanged.subscribe(emitSpy);
@@ -54,7 +54,7 @@ describe('NpcCard', () => {
 
       const expectedResult: INpcHpChange = {
         id: 1,
-        hpChangeAmount: null
+        hpChangeAmount: null,
       };
 
       component.hpChanged.subscribe(emitSpy);
@@ -69,7 +69,7 @@ describe('NpcCard', () => {
 
       const expectedResult: INpcHpChange = {
         id: 1,
-        hpChangeAmount: null
+        hpChangeAmount: null,
       };
 
       component.hpChanged.subscribe(emitSpy);
@@ -90,7 +90,7 @@ describe('NpcCard', () => {
       fixture.detectChanges();
 
       expect(input.value).toBe('');
-    })
+    });
   });
 
   describe('isDeleted', () => {
@@ -102,6 +102,6 @@ describe('NpcCard', () => {
       component.isDeleted.emit(5);
 
       expect(emitSpy).toHaveBeenCalledWith(5);
-    })
-  })
+    });
+  });
 });

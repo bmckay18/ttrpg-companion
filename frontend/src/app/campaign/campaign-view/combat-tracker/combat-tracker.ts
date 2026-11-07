@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, viewChild } from '@angular/core';
 import { NpcCard } from './npc-card/npc-card';
 import { INpcHpChange } from './interfaces/npc-hp-change';
 import { INpc } from './interfaces/npc';
@@ -13,26 +13,26 @@ import { IHpChangeDto } from './interfaces/hp-change-dto';
   templateUrl: './combat-tracker.html',
   styleUrl: './combat-tracker.css',
 })
-export class CombatTracker {
+export class CombatTracker implements OnInit {
   newNpcDialog = viewChild<ElementRef<HTMLDialogElement>>('modal');
-  pendingHpChanges: Record<number, number> = {}
+  pendingHpChanges: Record<number, number> = {};
   resetCounter = 0;
 
   combatTrackerService = inject(CombatTrackerService);
 
-  npcData: INpc[] = []
+  npcData: INpc[] = [];
 
   ngOnInit() {
     this.refreshData();
   }
 
-  createNewNpc(npcDetails:INewNpcFormDetails) {
+  createNewNpc(npcDetails: INewNpcFormDetails) {
     const npc: INpc = {
       name: npcDetails.name,
       maxHp: Number(npcDetails.hp),
       currentHp: Number(npcDetails.hp),
-      id: this.npcData.length + 1
-    }
+      id: this.npcData.length + 1,
+    };
 
     this.combatTrackerService.createNewNpc(npc);
     this.refreshData();
@@ -47,8 +47,7 @@ export class CombatTracker {
   updateTrackedHpList(payload: INpcHpChange) {
     if (payload.hpChangeAmount === null) {
       delete this.pendingHpChanges[payload.id];
-    }
-    else {
+    } else {
       this.pendingHpChanges[payload.id] = payload.hpChangeAmount;
     }
 
@@ -56,11 +55,13 @@ export class CombatTracker {
   }
 
   submitHpChanges() {
-    const payload = Object.entries(this.pendingHpChanges)
-    .map(([key, value]) => ({
-      id: Number(key),
-      hpAmountChanged: value
-    } as IHpChangeDto))
+    const payload = Object.entries(this.pendingHpChanges).map(
+      ([key, value]) =>
+        ({
+          id: Number(key),
+          hpAmountChanged: value,
+        }) as IHpChangeDto,
+    );
 
     this.combatTrackerService.updateNpcHp(payload);
     this.resetFields();

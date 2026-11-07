@@ -1,27 +1,27 @@
 .card-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
 }
 
 .control-container {
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
 }
 
 .form-section {
-    padding: 1rem;
+  padding: 1rem;
 }
 
 .form-header-text {
-    margin: 0;
-    background-color: var(--accent-color);
-    display: flex;
-    justify-content: center;
-    color: white;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid black;
+  margin: 0;
+  background-color: var(--accent-color);
+  display: flex;
+  justify-content: center;
+  color: white;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid black;
 }

@@ -23,7 +23,7 @@ describe('NewNpcForm', () => {
   it('should initialise the form', () => {
     expect(component.npcForm).toBeDefined();
     expect(component.npcForm.valid).toBe(false);
-  })
+  });
 
   describe('npcForm', () => {
     it('should require a valid name', () => {
@@ -38,16 +38,16 @@ describe('NewNpcForm', () => {
 
       expect(component.npcForm.controls.hp.valid).toBe(false);
       expect(component.npcForm.controls.hp.hasError('required')).toBe(true);
-    })
+    });
 
     it('should be valid for a valid submission', () => {
       component.npcForm.setValue({
         name: 'John',
-        hp: '123'
+        hp: '123',
       });
 
       expect(component.npcForm.valid).toBe(true);
-    })
+    });
 
     it('should call onSubmit on submission', () => {
       const onSubmitSpy = vi.spyOn(component, 'onSubmit');
@@ -56,8 +56,8 @@ describe('NewNpcForm', () => {
       form.dispatchEvent(new Event('submit'));
 
       expect(onSubmitSpy).toHaveBeenCalled();
-    })
-  })
+    });
+  });
 
   describe('onSubmit', () => {
     it('should not emit if form is invalid', () => {
@@ -74,9 +74,9 @@ describe('NewNpcForm', () => {
     it('should emit npc data if form is valid', () => {
       const expectedFormData = {
         name: 'John',
-        hp: '123'
-      }
-      
+        hp: '123',
+      };
+
       component.npcForm.setValue(expectedFormData);
 
       const npcDetailsSpy = vi.fn();
@@ -91,16 +91,16 @@ describe('NewNpcForm', () => {
     it('should reset the form on submission', () => {
       const expectedFormData = {
         name: 'John',
-        hp: '123'
-      }
+        hp: '123',
+      };
 
       const formResetSpy = vi.spyOn(component.npcForm, 'reset');
-      
+
       component.npcForm.setValue(expectedFormData);
 
       component.onSubmit();
 
       expect(formResetSpy).toHaveBeenCalled();
-    })
-  })
+    });
+  });
 });

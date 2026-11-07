@@ -15,10 +15,10 @@ describe('CombatTracker', () => {
     createNewNpc: ReturnType<typeof vi.fn>;
     updateNpcHp: ReturnType<typeof vi.fn>;
     deleteNpc: ReturnType<typeof vi.fn>;
-  }
+  };
 
   let npcDataMock: INpc[];
-  let modal: HTMLDialogElement | undefined
+  let modal: HTMLDialogElement | undefined;
 
   beforeEach(async () => {
     npcDataMock = [
@@ -26,25 +26,25 @@ describe('CombatTracker', () => {
         id: 1,
         name: 'James',
         currentHp: 5,
-        maxHp: 20
-      }
-    ]
+        maxHp: 20,
+      },
+    ];
 
     combatTrackerServiceMock = {
       getAllNpcsForCampaign: vi.fn().mockReturnValue(npcDataMock),
       createNewNpc: vi.fn(),
       updateNpcHp: vi.fn(),
-      deleteNpc: vi.fn()
-    }    
+      deleteNpc: vi.fn(),
+    };
 
     await TestBed.configureTestingModule({
       imports: [CombatTracker],
       providers: [
         {
           provide: CombatTrackerService,
-          useValue: combatTrackerServiceMock
-        }
-      ]
+          useValue: combatTrackerServiceMock,
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CombatTracker);
@@ -60,7 +60,7 @@ describe('CombatTracker', () => {
     fixture.detectChanges();
 
     expect(refreshDataSpy).toHaveBeenCalled();
-  })
+  });
 
   describe('createNewNpc', () => {
     beforeEach(() => {
@@ -71,21 +71,20 @@ describe('CombatTracker', () => {
       if (modal) {
         modal.close = vi.fn();
       }
-    })
-
+    });
 
     it('should call combat tracker service with valid npc object', () => {
       const mockNpcDetails: INewNpcFormDetails = {
         name: 'John',
-        hp: '15'
+        hp: '15',
       };
 
       const expectedNpcDetails: INpc = {
         name: 'John',
         maxHp: 15,
         currentHp: 15,
-        id: 2
-      }
+        id: 2,
+      };
 
       component.createNewNpc(mockNpcDetails);
 
@@ -94,10 +93,10 @@ describe('CombatTracker', () => {
 
     it('should refresh the data after submission', () => {
       const refreshDataSpy = vi.spyOn(component, 'refreshData');
-      
+
       const mockNpcDetails: INewNpcFormDetails = {
         name: 'John',
-        hp: '15'
+        hp: '15',
       };
 
       component.createNewNpc(mockNpcDetails);
@@ -108,7 +107,7 @@ describe('CombatTracker', () => {
     it('should close the dialog modal on submission', () => {
       const mockNpcDetails: INewNpcFormDetails = {
         name: 'John',
-        hp: '15'
+        hp: '15',
       };
 
       component.createNewNpc(mockNpcDetails);
@@ -121,17 +120,17 @@ describe('CombatTracker', () => {
     it('should call the combat tracker service and assign result to npcData', () => {
       const npcData: INpc[] = [
         {
-        id: 1,
-        name: 'James',
-        currentHp: 5,
-        maxHp: 20
+          id: 1,
+          name: 'James',
+          currentHp: 5,
+          maxHp: 20,
         },
         {
-        id: 2,
-        name: 'James',
-        currentHp: 5,
-        maxHp: 20
-        }
+          id: 2,
+          name: 'James',
+          currentHp: 5,
+          maxHp: 20,
+        },
       ];
 
       combatTrackerServiceMock.getAllNpcsForCampaign = vi.fn().mockReturnValue(npcData);
@@ -147,18 +146,18 @@ describe('CombatTracker', () => {
     it('should create record for new valid data', () => {
       const payload: INpcHpChange = {
         id: 1,
-        hpChangeAmount: 5
+        hpChangeAmount: 5,
       };
 
       component.updateTrackedHpList(payload);
 
       expect(component.pendingHpChanges[1]).toBe(5);
-    })
+    });
 
     it('should update existing record with new data if valid', () => {
       const payload: INpcHpChange = {
         id: 1,
-        hpChangeAmount: 5
+        hpChangeAmount: 5,
       };
 
       component.pendingHpChanges[1] = 10;
@@ -166,12 +165,12 @@ describe('CombatTracker', () => {
       component.updateTrackedHpList(payload);
 
       expect(component.pendingHpChanges[1]).toBe(5);
-    })
+    });
 
     it('should delete record if valus is null', () => {
       const payload: INpcHpChange = {
         id: 1,
-        hpChangeAmount: null
+        hpChangeAmount: null,
       };
 
       component.pendingHpChanges[1] = 5;
@@ -189,8 +188,8 @@ describe('CombatTracker', () => {
       const expectedPayload: IHpChangeDto[] = [
         {
           id: 1,
-          hpAmountChanged: 5
-        }
+          hpAmountChanged: 5,
+        },
       ];
 
       component.submitHpChanges();
@@ -213,22 +212,22 @@ describe('CombatTracker', () => {
     it('should increment reset counter and clear pending HP changes', () => {
       component.pendingHpChanges[1] = 5;
       component.resetCounter = 1;
-      
+
       component.resetFields();
 
       expect(component.resetCounter).toBe(2);
       expect('1' in component.pendingHpChanges).toBe(false);
     });
-  })
+  });
 
   describe('deleteNpc', () => {
     it('should call combat tracker service with ID and call refreshData', () => {
       const refreshDataSpy = vi.spyOn(component, 'refreshData');
-      
+
       component.deleteNpc(5);
 
       expect(combatTrackerServiceMock.deleteNpc).toHaveBeenCalledWith(5);
       expect(refreshDataSpy).toHaveBeenCalled();
-    })
-  })
+    });
+  });
 });

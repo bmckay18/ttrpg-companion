@@ -19,13 +19,13 @@ export const routes: Routes = [
     children: [
       {
         path: 'combat',
-        component: CombatTracker
+        component: CombatTracker,
       },
       {
         path: '',
         redirectTo: 'combat',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];

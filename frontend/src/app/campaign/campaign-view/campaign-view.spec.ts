@@ -10,9 +10,7 @@ describe('CampaignView', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [CampaignView],
-      providers: [
-        provideRouter([])
-      ]
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CampaignView);

@@ -1,4 +1,4 @@
 export interface INewNpcFormDetails {
-    name: string;
-    hp: string;
+  name: string;
+  hp: string;
 }

@@ -10,12 +10,8 @@ import { INewNpcFormDetails } from './new-npc-form-details';
 })
 export class NewNpcForm {
   npcForm = new FormGroup({
-    name: new FormControl('', {nonNullable: true, validators: [
-      Validators.required
-    ]}),
-    hp: new FormControl('', {nonNullable: true, validators: [
-      Validators.required,
-    ]})
+    name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    hp: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
   });
 
   npcDetails = output<INewNpcFormDetails>();
@@ -27,8 +23,8 @@ export class NewNpcForm {
 
     const npcData: INewNpcFormDetails = {
       name: this.npcForm.controls.name.value,
-      hp: this.npcForm.controls.hp.value
-    }
+      hp: this.npcForm.controls.hp.value,
+    };
 
     this.npcDetails.emit(npcData);
 
