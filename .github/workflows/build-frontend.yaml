@@ -1,10 +1,15 @@
-name: Build and Test Frontend
+name: Build and Deploy Frontend
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+      - develop
   pull_request:
-    branches: [ "main" ]
+    branches: 
+      - main 
+      - develop
+  workflow_dispatch: 
 
 jobs:
   build:
@@ -14,7 +19,7 @@ jobs:
         working-directory: ./frontend
     
     steps: 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install dependencies
         run: npm ci
@@ -30,3 +35,35 @@ jobs:
 
       - name: Build frontend
         run: npm run build 
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: angular-build
+          path: dist/ttrpg-companion-app/browser
+  
+  deploy:
+    runs-on: ubunut-latest
+
+    permissions:
+      contents: read
+      deployments: write
+
+    needs: build
+
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: angular-build
+          path: dist
+        
+      - name: Deploy to Cloudflare
+        uses: cloudflare/wrangler-actions@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN}}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID}}
+          command: pages deploy dist --project-name=ttrpgcompanion
+          gitHubToken: ${{ secrets.GITHUB_TOKEN}}
