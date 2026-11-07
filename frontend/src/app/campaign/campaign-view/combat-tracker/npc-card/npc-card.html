@@ -1,0 +1,14 @@
+<div class="card">
+  <h3 class="name">{{ npcData().name }}</h3>
+  <p>HP: {{ npcData().currentHp }} / {{ npcData().maxHp }}</p>
+  <input
+    placeholder="Enter damage received"
+    type="text"
+    #hpChangedField
+    (input)="updateHp(hpChangedField.value)"
+  />
+  <div class="button-container">
+    <button class="outline">View</button>
+    <button class="delete" (click)="isDeleted.emit(npcData().id)">Remove</button>
+  </div>
+</div>

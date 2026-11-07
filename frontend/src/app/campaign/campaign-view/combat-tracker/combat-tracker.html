@@ -1,0 +1,23 @@
+<section class="control-container">
+  <button class="outline" (click)="resetFields()">Clear Fields</button>
+  <button class="outline" (click)="submitHpChanges()">Update HP</button>
+  <button (click)="modal.showModal()">Add New NPC</button>
+</section>
+
+<section class="card-section">
+  @for (npc of npcData; track npc.id) {
+    <app-npc-card
+      [npcData]="npc"
+      (hpChanged)="updateTrackedHpList($event)"
+      [resetTrigger]="resetCounter"
+      (isDeleted)="deleteNpc($event)"
+    />
+  }
+</section>
+
+<dialog #modal>
+  <h3 class="form-header-text">New NPC</h3>
+  <div class="form-section">
+    <app-new-npc-form (npcDetails)="createNewNpc($event)" />
+  </div>
+</dialog>
