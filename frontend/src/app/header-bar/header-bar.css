@@ -1,8 +1,9 @@
 header {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   background-color: var(--accent-color);
   border-bottom: var(--border-default);
-  padding: 1rem 0;
+  padding: 1rem;
   color: white;
+  font-weight: bold;
 }
