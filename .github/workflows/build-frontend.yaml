@@ -40,7 +40,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: angular-build
-          path: dist/ttrpg-companion-app/browser
+          path: frontend/dist/ttrpg-companion-app/browser
+          if-no-files-found: error
   
   deploy:
     runs-on: ubuntu-latest
