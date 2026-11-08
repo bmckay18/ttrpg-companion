@@ -44,6 +44,7 @@ jobs:
         run: npm run build 
 
       - name: Upload build artifact
+        if: github.event_name == 'release' && github.event.action == 'published'
         uses: actions/upload-artifact@v4
         with:
           name: angular-build
@@ -73,5 +74,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN}}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID}}
-          command: deploy
+          command: deploy --config ./frontend/wrangler.jsonc
           gitHubToken: ${{ secrets.GITHUB_TOKEN}}
