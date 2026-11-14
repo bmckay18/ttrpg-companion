@@ -4,13 +4,9 @@ import { CampaignView } from './campaign/campaign-view/campaign-view';
 import { CombatTracker } from './campaign/campaign-view/combat-tracker/combat-tracker';
 import { Login } from './login/login';
 import { BaseInternal } from './base-internal/base-internal';
+import { authGuard } from './core/guards/auth-guard-guard';
 
 export const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'auth',
-    pathMatch: 'full',
-  },
   {
     path: 'auth',
     component: Login
@@ -18,12 +14,8 @@ export const routes: Routes = [
   {
     path: 'app',
     component: BaseInternal,
+    canActivate: [authGuard],
     children: [
-      {
-        path: '',
-        redirectTo: 'campaigns',
-        pathMatch: 'full'
-      },
       {
         path: 'campaigns',
         component: Campaign,
@@ -43,6 +35,20 @@ export const routes: Routes = [
           },
         ],
       },
+      {
+        path: '',
+        redirectTo: 'campaigns',
+        pathMatch: 'full'
+      },
     ]
+  },
+  {
+    path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: 'auth'
   }
 ];

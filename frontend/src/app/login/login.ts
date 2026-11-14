@@ -4,6 +4,7 @@ import { AuthService } from '../core/services/auth/auth-service';
 import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import { environment } from '../../environments/environment';
 export class Login {
   authService = inject(AuthService);
   http = inject(HttpClient);
+  router = inject(Router);
 
   loginForm = new FormGroup({
     email: new FormControl('', {validators: [Validators.required, Validators.email], nonNullable: true}),
@@ -35,14 +37,8 @@ export class Login {
     if (error) {
       console.log('Error', error.message);
       return;
-    }
+    };
 
-    console.log('Success', data.user);
-
-    const response = await firstValueFrom(
-      this.http.get(`${environment.apiUrl}/auth/me`)
-    );
-
-    console.log(response);
+    this.router.navigate(['/app/campaigns'])
   }
 }
