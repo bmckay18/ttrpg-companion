@@ -1,0 +1,36 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.page-container {
+    height: 100vh;
+}
+
+.login-form {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 6px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 0 20px 0px #afafaf;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-field input {
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+}
+
+.form-field label {
+    text-decoration: underline;
+}
