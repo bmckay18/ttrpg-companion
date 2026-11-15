@@ -1,15 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Login } from './login';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideHttpClient } from '@angular/common/http';
 import { AuthService } from '../core/services/auth/auth-service';
 import { Router } from '@angular/router';
 
 describe('Login', () => {
   let component: Login;
   let fixture: ComponentFixture<Login>;
-  let httpMock: HttpTestingController;
   let authServiceMock: {
     signIn: ReturnType<typeof vi.fn>
   };
@@ -28,8 +25,7 @@ describe('Login', () => {
 
     await TestBed.configureTestingModule({
       imports: [Login],
-      providers: [provideHttpClient(), 
-      provideHttpClientTesting(),
+      providers: [
       {
         provide: AuthService,
         useValue: authServiceMock
@@ -44,8 +40,6 @@ describe('Login', () => {
     fixture = TestBed.createComponent(Login);
     component = fixture.componentInstance;
     await fixture.whenStable();
-
-    httpMock = TestBed.inject(HttpTestingController);
   });
 
   it('should create', () => {

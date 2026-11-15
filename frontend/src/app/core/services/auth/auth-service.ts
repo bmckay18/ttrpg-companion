@@ -22,6 +22,7 @@ export class AuthService {
     return await this.supabase.auth.getSession();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onAuthStateChange(callback: (event: string, session: any) => void) {
     return this.supabase.auth.onAuthStateChange(callback);
   }

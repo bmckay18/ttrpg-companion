@@ -1,9 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../core/services/auth/auth-service';
-import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,7 +27,7 @@ export class Login {
 
     const {email, password} = this.loginForm.getRawValue();
 
-    const {data, error} = await this.authService.signIn(
+    const {error} = await this.authService.signIn(
       email, 
       password
     );
