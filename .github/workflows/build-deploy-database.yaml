@@ -74,6 +74,9 @@ jobs:
             --self-contained \
             --target-runtime linux-x64 \
             --output efbundle
+      
+      - name: Copy appsettings
+        run: cp Api/appsettings.json .
 
       - name: Deploy database migrations
         env:
