@@ -9,7 +9,7 @@ vi.mock('@supabase/supabase-js', () => ({
 }));
 
 import { Supabase } from './supabase';
-import { environment } from '../../../../environments/environment';
+//import { environment } from '../../../../environments/environment';
 
 describe('Supabase', () => {
   let service: Supabase;
