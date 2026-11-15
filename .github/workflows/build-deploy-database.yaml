@@ -1,0 +1,83 @@
+name: Build and Deploy Database to Supabase
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install EF Core tools
+        run: dotnet tool install --global dotnet-ef --version 10.0.14
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Check for pending model changes
+        run: dotnet ef migrations has-pending-model-changes --project Data/Data.csproj --startup-project Api/Api.csproj --configuration Release
+
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+
+    permissions:
+      contents: read
+
+    needs: build
+
+    if: github.event_name == 'release' && github.event.action == 'published'
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install EF Core tools
+        run: dotnet tool install --global dotnet-ef --version 10.0.14
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Generate migration bundle
+        run: |
+          dotnet ef migrations bundle \
+            --project Data/Data.csproj \
+            --startup-project Api/Api.csproj \
+            --configuration Release \
+            --self-contained \
+            --target-runtime linux-x64 \
+            --output efbundle
+
+      - name: Deploy database migrations
+        env:
+          CONNECTION_STRING: ${{ secrets.PRODUCTION_DB_CONNECTION_STRING }}
+        run: |
+          chmod +x efbundle
+          ./efbundle --connection "$CONNECTION_STRING"
