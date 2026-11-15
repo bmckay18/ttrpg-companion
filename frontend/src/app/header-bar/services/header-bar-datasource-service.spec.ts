@@ -10,10 +10,7 @@ describe('HeaderBarDatasourceService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        provideHttpClient(),
-        provideHttpClientTesting()
-      ]
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     });
     service = TestBed.inject(HeaderBarDatasourceService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -26,16 +23,14 @@ describe('HeaderBarDatasourceService', () => {
   it('should retrieve the display name', () => {
     const expectedName = 'Frodo Baggins';
 
-    service.getDisplayName().subscribe(name => {
+    service.getDisplayName().subscribe((name) => {
       expect(name).toBe(expectedName);
     });
 
-    const request = httpMock.expectOne(
-      `https://localhost:7202/api/user/display-name`
-    );
+    const request = httpMock.expectOne(`https://localhost:7202/api/user/display-name`);
 
     expect(request.request.method).toBe('GET');
 
     request.flush(expectedName);
-  })
+  });
 });

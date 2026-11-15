@@ -9,21 +9,21 @@ describe('HeaderBar', () => {
   let fixture: ComponentFixture<HeaderBar>;
   let datasourceMock: {
     getDisplayName: ReturnType<typeof vi.fn>;
-  }
+  };
 
   beforeEach(async () => {
     datasourceMock = {
-      getDisplayName: vi.fn().mockReturnValue(of('Frodo Baggins'))
-    }
+      getDisplayName: vi.fn().mockReturnValue(of('Frodo Baggins')),
+    };
 
     await TestBed.configureTestingModule({
       imports: [HeaderBar],
       providers: [
         {
           provide: HeaderBarDatasourceService,
-          useValue: datasourceMock
-        }
-      ]
+          useValue: datasourceMock,
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeaderBar);
@@ -38,5 +38,5 @@ describe('HeaderBar', () => {
   it('should assign the api result to displayName', () => {
     expect(datasourceMock.getDisplayName).toHaveBeenCalled();
     expect(fixture.componentInstance.displayName()).toBe('Frodo Baggins');
-  })
+  });
 });
