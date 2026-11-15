@@ -1,8 +1,5 @@
 ﻿using Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data
 {
@@ -15,5 +12,14 @@ namespace Data
 
         public DbSet<Campaign> Campaigns => Set<Campaign>();
         public DbSet<Npc> Npcs => Set<Npc>();
+        public DbSet<User> Users => Set<User>();
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(
+                typeof(AppDbContext).Assembly);
+        }
     }
 }

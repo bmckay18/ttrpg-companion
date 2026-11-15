@@ -5,5 +5,14 @@ header {
   border-bottom: var(--border-default);
   padding: 1rem;
   color: white;
+}
+
+.app-name {
+  font-size: 1rem;
+  margin: 0;
   font-weight: bold;
+}
+
+.display-name {
+  margin: 0 0 0 auto;
 }
