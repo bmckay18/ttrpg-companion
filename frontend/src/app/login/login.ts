@@ -16,8 +16,11 @@ export class Login {
   router = inject(Router);
 
   loginForm = new FormGroup({
-    email: new FormControl('', {validators: [Validators.required, Validators.email], nonNullable: true}),
-    password: new FormControl('', {validators: [Validators.required], nonNullable: true})
+    email: new FormControl('', {
+      validators: [Validators.required, Validators.email],
+      nonNullable: true,
+    }),
+    password: new FormControl('', { validators: [Validators.required], nonNullable: true }),
   });
 
   async onSubmit() {
@@ -25,18 +28,15 @@ export class Login {
       return;
     }
 
-    const {email, password} = this.loginForm.getRawValue();
+    const { email, password } = this.loginForm.getRawValue();
 
-    const {error} = await this.authService.signIn(
-      email, 
-      password
-    );
+    const { error } = await this.authService.signIn(email, password);
 
     if (error) {
       console.log('Error', error.message);
       return;
-    };
+    }
 
-    this.router.navigate(['/app/campaigns'])
+    this.router.navigate(['/app/campaigns']);
   }
 }

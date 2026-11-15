@@ -10,7 +10,7 @@ export class AuthService {
   async signIn(email: string, password: string) {
     return await this.supabase.auth.signInWithPassword({
       email,
-      password
+      password,
     });
   }
 

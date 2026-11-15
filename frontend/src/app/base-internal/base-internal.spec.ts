@@ -10,7 +10,7 @@ describe('BaseInternal', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [BaseInternal],
-      providers: [provideRouter([])]
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(BaseInternal);

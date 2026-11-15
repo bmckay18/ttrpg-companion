@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
 const { mockCreateClient } = vi.hoisted(() => ({
-    mockCreateClient: vi.fn()
+  mockCreateClient: vi.fn(),
 }));
 
 vi.mock('@supabase/supabase-js', () => ({
-    createClient: mockCreateClient
+  createClient: mockCreateClient,
 }));
 
 import { Supabase } from './supabase';
@@ -25,5 +25,5 @@ describe('Supabase', () => {
 
   it('should create client with url and key', () => {
     expect(mockCreateClient).toHaveBeenCalledWith(environment.supabaseUrl, environment.supabaseKey);
-  })
+  });
 });

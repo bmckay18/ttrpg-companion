@@ -9,7 +9,7 @@ import { authGuard } from './core/guards/auth-guard';
 export const routes: Routes = [
   {
     path: 'auth',
-    component: Login
+    component: Login,
   },
   {
     path: 'app',
@@ -38,9 +38,9 @@ export const routes: Routes = [
       {
         path: '',
         redirectTo: 'campaigns',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
-    ]
+    ],
   },
   {
     path: '',
@@ -49,6 +49,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'auth'
-  }
+    redirectTo: 'auth',
+  },
 ];

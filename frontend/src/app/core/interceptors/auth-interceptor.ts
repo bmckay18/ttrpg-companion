@@ -23,11 +23,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
       const authenticatedRequest = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       return next(authenticatedRequest);
-    })
+    }),
   );
 };

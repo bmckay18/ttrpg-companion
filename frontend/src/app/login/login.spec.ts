@@ -8,33 +8,33 @@ describe('Login', () => {
   let component: Login;
   let fixture: ComponentFixture<Login>;
   let authServiceMock: {
-    signIn: ReturnType<typeof vi.fn>
+    signIn: ReturnType<typeof vi.fn>;
   };
   let routerMock: {
-    navigate: ReturnType<typeof vi.fn>
-  }
+    navigate: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(async () => {
     authServiceMock = {
-      signIn: vi.fn()
+      signIn: vi.fn(),
     };
 
     routerMock = {
-      navigate: vi.fn()
-    }
+      navigate: vi.fn(),
+    };
 
     await TestBed.configureTestingModule({
       imports: [Login],
       providers: [
-      {
-        provide: AuthService,
-        useValue: authServiceMock
-      },
-      {
-        provide: Router,
-        useValue: routerMock
-      }
-    ]
+        {
+          provide: AuthService,
+          useValue: authServiceMock,
+        },
+        {
+          provide: Router,
+          useValue: routerMock,
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Login);
@@ -57,13 +57,13 @@ describe('Login', () => {
     it('should call the auth service with the provided email and password', async () => {
       component.loginForm.setValue({
         email: 'email@email.com',
-        password: 'password123'
+        password: 'password123',
       });
 
       authServiceMock.signIn.mockResolvedValue({
         data: {
-          user: 1
-        }
+          user: 1,
+        },
       });
 
       await component.onSubmit();
@@ -73,15 +73,15 @@ describe('Login', () => {
     });
 
     it('should navigate to the campaigns tab on successful sign in', async () => {
-       component.loginForm.setValue({
+      component.loginForm.setValue({
         email: 'email@email.com',
-        password: 'password123'
+        password: 'password123',
       });
 
       authServiceMock.signIn.mockResolvedValue({
         data: {
-          user: 1
-        }
+          user: 1,
+        },
       });
 
       await component.onSubmit();
@@ -93,19 +93,19 @@ describe('Login', () => {
     it('should return if an error occurs during sign in', async () => {
       component.loginForm.setValue({
         email: 'email@email.com',
-        password: 'password123'
+        password: 'password123',
       });
 
       authServiceMock.signIn.mockResolvedValue({
         error: {
-          message: 'error'
-        }
+          message: 'error',
+        },
       });
 
       await component.onSubmit();
 
       expect(component.loginForm.valid).toBe(true);
       expect(routerMock.navigate).not.toHaveBeenCalled();
-    })
-  })
+    });
+  });
 });

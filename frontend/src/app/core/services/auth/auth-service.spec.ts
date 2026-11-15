@@ -12,8 +12,8 @@ describe('AuthService', () => {
         signOut: ReturnType<typeof vi.fn>;
         getSession: ReturnType<typeof vi.fn>;
         onAuthStateChange: ReturnType<typeof vi.fn>;
-      }
-    }
+      };
+    };
   };
 
   beforeEach(() => {
@@ -23,18 +23,18 @@ describe('AuthService', () => {
           signInWithPassword: vi.fn(),
           signOut: vi.fn(),
           getSession: vi.fn(),
-          onAuthStateChange: vi.fn()
-        }
-      }
-    }
+          onAuthStateChange: vi.fn(),
+        },
+      },
+    };
 
     TestBed.configureTestingModule({
       providers: [
         {
           provide: Supabase,
-          useValue: supabaseMock
-        }
-      ]
+          useValue: supabaseMock,
+        },
+      ],
     });
     service = TestBed.inject(AuthService);
   });
@@ -49,7 +49,7 @@ describe('AuthService', () => {
 
       expect(supabaseMock.client.auth.signInWithPassword).toHaveBeenCalledWith({
         email: 'email123',
-        password: 'password1'
+        password: 'password1',
       });
     });
   });
@@ -59,16 +59,16 @@ describe('AuthService', () => {
       await service.signOut();
 
       expect(supabaseMock.client.auth.signOut).toHaveBeenCalled();
-    })
-  })
+    });
+  });
 
   describe('getSession', () => {
     it('should retrieve the user session', async () => {
       await service.getSession();
 
       expect(supabaseMock.client.auth.getSession).toHaveBeenCalled();
-    })
-  })
+    });
+  });
 
   describe('onAuthStateChange', () => {
     it('should call the onAuthStateChange supabase function with the provided callback', () => {
@@ -76,6 +76,6 @@ describe('AuthService', () => {
       service.onAuthStateChange(callback);
 
       expect(supabaseMock.client.auth.onAuthStateChange).toHaveBeenCalledWith(callback);
-    })
-  })
+    });
+  });
 });
