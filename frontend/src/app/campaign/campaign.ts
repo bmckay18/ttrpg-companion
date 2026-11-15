@@ -45,6 +45,6 @@ export class Campaign {
   }
 
   openCampaign(id: number) {
-    this.router.navigate(['/campaigns', id]);
+    this.router.navigate(['/app/campaigns', id]);
   }
 }
