@@ -74,11 +74,13 @@ jobs:
             --self-contained \
             --target-runtime linux-x64 \
             --output efbundle
+      
+      - name: Copy appsettings
+        run: cp Api/appsettings.json .
 
       - name: Deploy database migrations
         env:
           CONNECTION_STRING: ${{ secrets.PRODUCTION_DB_CONNECTION_STRING }}
-          Supabase__Url: ${{ secrets.PRODUCTION_DB_URL }}
         run: |
           chmod +x efbundle
           ./efbundle --connection "$CONNECTION_STRING"
