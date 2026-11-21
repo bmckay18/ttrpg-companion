@@ -82,7 +82,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: migration-bundle
-          path: .
+          path: ./backend
       
       - name: Copy appsettings
         run: cp Api/appsettings.json .
