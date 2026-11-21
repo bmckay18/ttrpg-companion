@@ -7,6 +7,13 @@ on:
     branches: [main]
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Deploy to Render'
+        required: true
+        type: boolean
+        default: false
 
 jobs:
   build:
@@ -32,7 +39,6 @@ jobs:
       - name: Test
         run: dotnet test --no-build --verbosity normal
 
-
   deploy:
     runs-on: ubuntu-latest
 
@@ -41,7 +47,7 @@ jobs:
     
     needs: build
 
-    if: github.event_name == 'release' && github.event.action == 'published'
+    if: (github.event_name == 'release' && github.event.action == 'published') || inputs.deploy
 
     steps:
       - name: Checkout release
