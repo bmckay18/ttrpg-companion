@@ -59,7 +59,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: migration-bundle
-          path: ./efbundle
+          path: ./backend/efbundle
           if-no-files-found: error
 
   deploy:
