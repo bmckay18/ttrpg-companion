@@ -6,6 +6,13 @@ using Service.UserDetails;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure port
+if (builder.Environment.IsProduction())
+{
+    var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+}
+
 // Configure database
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -36,12 +43,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 // Configure CORS
+var websiteUrl = builder.Configuration["Website:Url"] ?? throw new InvalidOperationException("Website URL is missing.");
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("Angular", policy =>
+    options.AddPolicy("Development", policy =>
     {
         policy
         .WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+
+    options.AddPolicy("Production", policy =>
+    {
+        policy
+        .WithOrigins(websiteUrl)
         .AllowAnyHeader()
         .AllowAnyMethod();
     });
@@ -49,6 +66,8 @@ builder.Services.AddCors(options =>
 
 // Add services to the container.
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddHealthChecks();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -62,7 +81,14 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseCors("Angular");
+if (app.Environment.IsDevelopment())
+{
+    app.UseCors("Development");
+}
+else
+{
+    app.UseCors("Production");
+}
 
 app.UseHttpsRedirection();
 
@@ -70,5 +96,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/api/health");
 
 app.Run();

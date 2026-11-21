@@ -1,0 +1,26 @@
+
+# Build outputs
+**/bin/
+**/obj/
+
+# Visual Studio
+.vs/
+.vscode/
+
+# Git
+.git/
+.gitignore
+
+# GitHub
+.github/
+
+# User-specific files
+*.user
+*.suo
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
