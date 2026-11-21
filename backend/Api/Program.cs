@@ -6,6 +6,13 @@ using Service.UserDetails;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure port
+if (builder.Environment.IsProduction())
+{
+    var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+}
+
 // Configure database
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
