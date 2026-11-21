@@ -91,5 +91,6 @@ jobs:
         env:
           CONNECTION_STRING: ${{ secrets.PRODUCTION_DB_CONNECTION_STRING }}
         run: |
+          ls -la
           chmod +x efbundle
           ./efbundle --connection "$CONNECTION_STRING"
