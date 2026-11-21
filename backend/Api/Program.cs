@@ -43,12 +43,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 // Configure CORS
+var websiteUrl = builder.Configuration["Website:Url"] ?? throw new InvalidOperationException("Website URL is missing.");
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("Angular", policy =>
+    options.AddPolicy("Development", policy =>
     {
         policy
         .WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+
+    options.AddPolicy("Production", policy =>
+    {
+        policy
+        .WithOrigins(websiteUrl)
         .AllowAnyHeader()
         .AllowAnyMethod();
     });
@@ -71,7 +81,14 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseCors("Angular");
+if (app.Environment.IsDevelopment())
+{
+    app.UseCors("Development");
+}
+else
+{
+    app.UseCors("Production");
+}
 
 app.UseHttpsRedirection();
 
