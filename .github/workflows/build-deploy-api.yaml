@@ -1,0 +1,63 @@
+name: Build and Deploy API to Render
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+      
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+    
+    needs: build
+
+    if: github.event_name == 'release' && github.event.action == 'published'
+
+    steps:
+      - name: Checkout release
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Get release commit SHA
+        id: commit
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Trigger Render deployment
+        env:
+          DEPLOY_URL: ${{ secrets.RENDER_DEPLOY_HOOK }}
+          COMMIT_SHA: ${{ steps.commit.outputs.sha }}
+        run: |
+          curl --fail-with-body --silent --show-error \
+            --request POST \
+            "${DEPLOY_URL}&ref=${COMMIT_SHA}"
