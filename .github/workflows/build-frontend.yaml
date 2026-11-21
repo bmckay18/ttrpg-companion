@@ -12,7 +12,7 @@ on:
   workflow_dispatch: 
     inputs:
       deploy:
-        description: 'Deploy To Cloudflare'
+        description: 'Deploy to Cloudflare'
         required: true
         type: boolean
         default: false
