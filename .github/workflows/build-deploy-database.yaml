@@ -10,6 +10,12 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Deploy Migrations to Supabase'
+        required: true
+        type: boolean
+        default: false
 
 jobs:
   build:
@@ -38,6 +44,24 @@ jobs:
       - name: Check for pending model changes
         run: dotnet ef migrations has-pending-model-changes --project Data/Data.csproj --startup-project Api/Api.csproj --configuration Release
 
+      - name: Generate migration bundle
+        run: |
+          dotnet ef migrations bundle \
+            --project Data/Data.csproj \
+            --startup-project Api/Api.csproj \
+            --configuration Release \
+            --self-contained \
+            --target-runtime linux-x64 \
+            --output efbundle
+      
+      - name: Upload build artifact
+        if: (github.event_name == 'release' && github.event.action == 'published') || inputs.deploy
+        uses: actions/upload-artifact@v4
+        with:
+          name: migration-bundle
+          path: ./backend/efbundle
+          if-no-files-found: error
+
   deploy:
     runs-on: ubuntu-latest
     defaults:
@@ -49,31 +73,16 @@ jobs:
 
     needs: build
 
-    if: github.event_name == 'release' && github.event.action == 'published'
+    if: (github.event_name == 'release' && github.event.action == 'published') || inputs.deploy
 
     steps:
       - uses: actions/checkout@v7
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
         with:
-          dotnet-version: 10.0.x
-
-      - name: Install EF Core tools
-        run: dotnet tool install --global dotnet-ef --version 10.0.14
-
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Generate migration bundle
-        run: |
-          dotnet ef migrations bundle \
-            --project Data/Data.csproj \
-            --startup-project Api/Api.csproj \
-            --configuration Release \
-            --self-contained \
-            --target-runtime linux-x64 \
-            --output efbundle
+          name: migration-bundle
+          path: ./backend
       
       - name: Copy appsettings
         run: cp Api/appsettings.json .
