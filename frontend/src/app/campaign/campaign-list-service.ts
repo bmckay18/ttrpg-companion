@@ -1,48 +1,48 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ICampaign } from './campaign-interface';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CampaignListService {
+  private http = inject(HttpClient);
+
   private mockCampaignData: ICampaign[] = [
     {
-      title: 'Campaign 1',
+      name: 'Campaign 1',
       id: 1,
       creationDate: '13/01/2000',
-      lastModifiedDate: '28/10/2025',
+      modifiedDate: '28/10/2025',
     },
     {
-      title: 'The Falls of Dunleigh',
+      name: 'The Falls of Dunleigh',
       id: 2,
       creationDate: '1/09/2018',
-      lastModifiedDate: '16/05/2026',
+      modifiedDate: '16/05/2026',
     },
     {
-      title: 'The Rise of The Dread Lord',
+      name: 'The Rise of The Dread Lord',
       id: 3,
       creationDate: '28/12/2025',
-      lastModifiedDate: '16/05/2026',
+      modifiedDate: '16/05/2026',
     },
     {
-      title: 'Skywalker: A New Hope',
+      name: 'Skywalker: A New Hope',
       id: 4,
       creationDate: '28/12/2025',
-      lastModifiedDate: '16/05/2026',
+      modifiedDate: '16/05/2026',
     },
   ];
 
   getCampaignList(searchTerm: string): Observable<ICampaign[]> {
-    if (searchTerm.trim() === '') {
-      return of(this.mockCampaignData);
-    }
-
-    const filteredData = this.mockCampaignData.filter((campaign) =>
-      campaign.title.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-
-    return of(filteredData);
+    return this.http.get<ICampaign[]>(`${environment.apiUrl}/campaigns`, {
+      params: {
+        searchTerm: searchTerm ?? ''
+      }
+    });
   }
 
   createCampaign(title: string): void {
@@ -51,10 +51,10 @@ export class CampaignListService {
     }
 
     const campaign: ICampaign = {
-      title: title,
+      name: title,
       id: this.mockCampaignData.length + 1,
       creationDate: '10/05/2026',
-      lastModifiedDate: '10/05/2026',
+      modifiedDate: '10/05/2026',
     };
 
     this.mockCampaignData.push(campaign);

@@ -1,14 +1,14 @@
 import { Component, ElementRef, inject, viewChild } from '@angular/core';
 import { CampaignListService } from './campaign-list-service';
 import { Observable, of } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { NewCampaignForm } from './new-campaign-form/new-campaign-form';
 import { ICampaign } from './campaign-interface';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-campaign',
-  imports: [AsyncPipe, NewCampaignForm],
+  imports: [AsyncPipe, NewCampaignForm, DatePipe],
   templateUrl: './campaign.html',
   styleUrl: './campaign.css',
 })

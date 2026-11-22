@@ -1,6 +1,6 @@
 export interface ICampaign {
-  title: string;
+  name: string;
   id: number;
   creationDate: string;
-  lastModifiedDate: string;
+  modifiedDate: string;
 }
