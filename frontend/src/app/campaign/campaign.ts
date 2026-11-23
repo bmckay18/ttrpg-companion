@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { CampaignListService } from './campaign-list-service';
 import { Observable, of } from 'rxjs';
 import { AsyncPipe, DatePipe } from '@angular/common';
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class Campaign {
   campaignListService = inject(CampaignListService);
   router = inject(Router);
-  campaigns$: Observable<ICampaign[]> = of([]);
+  campaigns$ = signal<Observable<ICampaign[]>>(this.campaignListService.getCampaignList(''));
 
   newCampaignModal = viewChild<ElementRef<HTMLDialogElement>>('modal');
   inputField = viewChild<ElementRef<HTMLInputElement>>('searchInput');
@@ -25,13 +25,23 @@ export class Campaign {
   }
 
   createCampaign(campaignName: string) {
-    this.campaignListService.createCampaign(campaignName.trim().toLowerCase());
+    this.campaignListService.createCampaign(campaignName).subscribe({
+      next: () => {
+        this.newCampaignModal()?.nativeElement.close();
 
-    this.newCampaignModal()?.nativeElement.close();
+        const currentSearch = this.inputField()!.nativeElement.value;
+
+        this.searchCampaigns(currentSearch);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
+
   }
 
   searchCampaigns(searchTerm: string) {
-    this.campaigns$ = this.campaignListService.getCampaignList(searchTerm.trim().toLowerCase());
+    this.campaigns$.set(this.campaignListService.getCampaignList(searchTerm.trim().toLowerCase()));
   }
 
   resetSearch() {

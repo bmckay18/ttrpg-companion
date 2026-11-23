@@ -8,6 +8,7 @@ namespace Service.Campaigns
     public class CampaignListService : ICampaignListService
     {
         private AppDbContext _dbContext;
+        private const int _minCampaignName = 5;
 
         public CampaignListService(AppDbContext dbContext)
         {
@@ -30,6 +31,30 @@ namespace Service.Campaigns
                 CreationDate = x.CreationDate,
                 ModifiedDate = x.LastModifiedDate
             }).ToListAsync(cancellationToken);
+        }
+
+        public async Task CreateCampaignAsync(Guid userId, CreateCampaignRequestDto request, CancellationToken cancellationToken)
+        {
+            var name = request.Name;
+
+            if (string.IsNullOrWhiteSpace(name) || name.Length < _minCampaignName)
+            {
+                throw new InvalidOperationException("The name must be 5 or more characters in length.");
+            }
+
+            var currentDate = DateTime.UtcNow;
+
+            var campaign = new Campaign
+            {
+                Name = name,
+                CreationDate = currentDate,
+                LastModifiedDate = currentDate,
+                UserId = userId
+            };
+
+            _dbContext.Campaigns.Add(campaign);
+
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

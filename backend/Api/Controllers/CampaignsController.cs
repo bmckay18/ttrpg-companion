@@ -23,5 +23,14 @@ namespace Api.Controllers
         {
             return Ok(await _campaignListService.GetCampaignsAsync(UserId, searchTerm, cancellationToken));
         }
+
+        [HttpPost]
+        [Route("create")]
+        public async Task<IActionResult> CreateCampaignAsync([FromBody] CreateCampaignRequestDto request, CancellationToken cancellationToken)
+        {
+            await _campaignListService.CreateCampaignAsync(UserId, request, cancellationToken);
+
+            return Created();
+        }
     }
 }
