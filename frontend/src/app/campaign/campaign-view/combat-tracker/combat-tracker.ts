@@ -76,9 +76,15 @@ export class CombatTracker implements OnInit {
         }) as IHpChangeDto,
     );
 
-    this.combatTrackerService.updateNpcHp(payload);
-    this.resetFields();
-    this.refreshData();
+    this.combatTrackerService.updateNpcHp(payload, this.campaignId).subscribe({
+      next: () => {
+        this.resetFields();
+        this.refreshData();
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
   resetFields() {

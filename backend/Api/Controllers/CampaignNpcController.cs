@@ -29,5 +29,13 @@ namespace Api.Controllers
             await _combatTrackerService.CreateNpcAsync(request, campaignId, UserId, cancellationToken);
             return Created();
         }
+
+        [HttpPost]
+        [Route("{campaignId}/npcs/update")]
+        public async Task<IActionResult> UpdateNpcHealthAsync([FromBody] IEnumerable<HealthUpdateRequestDto> request, int campaignId, CancellationToken cancellationToken)
+        {
+            await _combatTrackerService.UpdateNpcHealthAsync(request, campaignId, UserId, cancellationToken);
+            return NoContent();
+        }
     }
 }

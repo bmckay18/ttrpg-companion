@@ -69,5 +69,52 @@ namespace Service.CombatTracker
             _dbContext.Npcs.Add(newNpc);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task UpdateNpcHealthAsync(IEnumerable<HealthUpdateRequestDto> requestData, int campaignId, Guid userId, CancellationToken cancellationToken)
+        {
+            if (!requestData.Any())
+            {
+                return;
+            }
+            
+            var npcIds = requestData.Select(x => x.Id).ToArray();
+
+            if (npcIds.Distinct().Count() != requestData.Count())
+            {
+                throw new ArgumentException("Duplicate NPC Ids are not allowed.");
+            }
+
+            var accessibleNpcs = await _dbContext.Npcs
+                .Join(_dbContext.Campaigns, outer => outer.CampaignId, inner => inner.Id, (outer, inner) => new
+                {
+                    Npcs = outer,
+                    OwnerId = inner.UserId,
+                    CampaignId = inner.Id
+                })
+                .Where(x => x.OwnerId == userId && npcIds.Contains(x.Npcs.Id) && x.CampaignId == campaignId)
+                .Select(x => x.Npcs)
+                .ToDictionaryAsync(x => x.Id, cancellationToken);
+
+            foreach (var request in requestData)
+            {
+                if (!accessibleNpcs.TryGetValue(request.Id, out var npc))
+                {
+                    throw new KeyNotFoundException($"NPC {request.Id} was not found.");
+                }
+
+                var newHp = npc.CurrentHp + request.HpAmountChanged;
+
+                if (newHp <= 0)
+                {
+                    _dbContext.Remove(npc);
+                }
+                else
+                {
+                    npc.CurrentHp = Math.Min(newHp, npc.MaxHp);
+                }
+            }
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
     }
 }

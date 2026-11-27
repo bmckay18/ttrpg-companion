@@ -7,5 +7,6 @@ namespace Service.CombatTracker
     {
         Task CreateNpcAsync(NewNpcRequestDto requestData, int campaignId, Guid userId, CancellationToken cancellationToken);
         Task<IEnumerable<NpcDto>> GetNpcsAsync(int campaignId, Guid userId, CancellationToken cancellationToken);
+        Task UpdateNpcHealthAsync(IEnumerable<HealthUpdateRequestDto> requestData, int campaignId, Guid userId, CancellationToken cancellationToken);
     }
 }

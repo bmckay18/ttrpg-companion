@@ -70,8 +70,8 @@ export class CombatTrackerService {
     return this.http.post<void>(`${environment.apiUrl}/campaigns/${campaignId}/npcs`, npcData);
   }
 
-  updateNpcHp(hpChangedList: IHpChangeDto[]) {
-    console.log(hpChangedList);
+  updateNpcHp(hpChangedList: IHpChangeDto[], campaignId: number): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/campaigns/${campaignId}/npcs/update`, hpChangedList);
   }
 
   deleteNpc(id: number) {
