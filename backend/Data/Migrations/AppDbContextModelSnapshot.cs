@@ -56,6 +56,9 @@ namespace Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CampaignId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("CurrentHp")
                         .HasColumnType("integer");
 
@@ -67,6 +70,8 @@ namespace Data.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CampaignId");
 
                     b.ToTable("Npcs");
                 });
@@ -92,6 +97,15 @@ namespace Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Data.Entities.Npc", b =>
+                {
+                    b.HasOne("Data.Entities.Campaign", null)
+                        .WithMany()
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -10,33 +10,6 @@ import { environment } from '../../environments/environment';
 export class CampaignListService {
   private http = inject(HttpClient);
 
-  private mockCampaignData: ICampaign[] = [
-    {
-      name: 'Campaign 1',
-      id: 1,
-      creationDate: '13/01/2000',
-      modifiedDate: '28/10/2025',
-    },
-    {
-      name: 'The Falls of Dunleigh',
-      id: 2,
-      creationDate: '1/09/2018',
-      modifiedDate: '16/05/2026',
-    },
-    {
-      name: 'The Rise of The Dread Lord',
-      id: 3,
-      creationDate: '28/12/2025',
-      modifiedDate: '16/05/2026',
-    },
-    {
-      name: 'Skywalker: A New Hope',
-      id: 4,
-      creationDate: '28/12/2025',
-      modifiedDate: '16/05/2026',
-    },
-  ];
-
   getCampaignList(searchTerm: string): Observable<ICampaign[]> {
     return this.http.get<ICampaign[]>(`${environment.apiUrl}/campaigns`, {
       params: {

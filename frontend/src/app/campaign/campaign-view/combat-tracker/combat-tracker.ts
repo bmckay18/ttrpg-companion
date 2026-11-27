@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
 import { NpcCard } from './npc-card/npc-card';
 import { INpcHpChange } from './interfaces/npc-hp-change';
 import { INpc } from './interfaces/npc';
@@ -6,10 +6,14 @@ import { NewNpcForm } from './new-npc-form/new-npc-form';
 import { INewNpcFormDetails } from './new-npc-form/new-npc-form-details';
 import { CombatTrackerService } from './services/combat-tracker-service';
 import { IHpChangeDto } from './interfaces/hp-change-dto';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { INewNpcRequest } from './services/new-npc-request';
 
 @Component({
   selector: 'app-combat-tracker',
-  imports: [NpcCard, NewNpcForm],
+  imports: [NpcCard, NewNpcForm, AsyncPipe],
   templateUrl: './combat-tracker.html',
   styleUrl: './combat-tracker.css',
 })
@@ -19,29 +23,38 @@ export class CombatTracker implements OnInit {
   resetCounter = 0;
 
   combatTrackerService = inject(CombatTrackerService);
+  
+  private route = inject(ActivatedRoute);
+  campaignId = Number(
+    this.route.parent?.snapshot.paramMap.get('id')
+  );
 
-  npcData: INpc[] = [];
+  npcData$ = signal<Observable<INpc[]>>(this.combatTrackerService.getAllNpcsForCampaign(this.campaignId));
 
   ngOnInit() {
     this.refreshData();
   }
 
   createNewNpc(npcDetails: INewNpcFormDetails) {
-    const npc: INpc = {
+    const npcRequest: INewNpcRequest = {
       name: npcDetails.name,
-      maxHp: Number(npcDetails.hp),
-      currentHp: Number(npcDetails.hp),
-      id: this.npcData.length + 1,
+      hp: Number(npcDetails.hp)
     };
 
-    this.combatTrackerService.createNewNpc(npc);
-    this.refreshData();
+    this.combatTrackerService.createNewNpc(npcRequest, this.campaignId).subscribe({
+      next: () => {
+        this.refreshData();
 
-    this.newNpcDialog()?.nativeElement.close();
+        this.newNpcDialog()?.nativeElement.close();
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
   refreshData() {
-    this.npcData = this.combatTrackerService.getAllNpcsForCampaign();
+    this.npcData$.set(this.combatTrackerService.getAllNpcsForCampaign(this.campaignId));
   }
 
   updateTrackedHpList(payload: INpcHpChange) {
