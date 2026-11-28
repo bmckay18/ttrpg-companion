@@ -14,10 +14,7 @@ describe('CombatTrackerService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        provideHttpClient(),
-        provideHttpClientTesting()
-      ]
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     });
     service = TestBed.inject(CombatTrackerService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -25,7 +22,7 @@ describe('CombatTrackerService', () => {
 
   afterEach(() => {
     httpMock.verify();
-  })
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -38,13 +35,13 @@ describe('CombatTrackerService', () => {
           name: 'The Lich',
           id: 1,
           currentHp: 15,
-          maxHp: 20
-        }
+          maxHp: 20,
+        },
       ];
 
       const campaignId = 5;
 
-      service.getAllNpcsForCampaign(campaignId).subscribe(response => {
+      service.getAllNpcsForCampaign(campaignId).subscribe((response) => {
         expect(response).toEqual(mockNpcs);
       });
 
@@ -60,7 +57,7 @@ describe('CombatTrackerService', () => {
     it('should call the API with a valid NPC payload', () => {
       const payload: INewNpcRequest = {
         name: 'The Lich',
-        hp: 150
+        hp: 150,
       };
 
       const campaignId = 5;
@@ -81,15 +78,17 @@ describe('CombatTrackerService', () => {
       const payload: IHpChangeDto[] = [
         {
           id: 1,
-          hpAmountChanged: -150
-        }
+          hpAmountChanged: -150,
+        },
       ];
 
       const campaignId = 3;
 
       service.updateNpcHp(payload, campaignId).subscribe();
 
-      const request = httpMock.expectOne(`${environment.apiUrl}/campaigns/${campaignId}/npcs/health`);
+      const request = httpMock.expectOne(
+        `${environment.apiUrl}/campaigns/${campaignId}/npcs/health`,
+      );
 
       expect(request.request.method).toBe('PATCH');
       expect(request.request.body).toEqual(payload);
@@ -105,11 +104,13 @@ describe('CombatTrackerService', () => {
 
       service.deleteNpc(npcId, campaignId).subscribe();
 
-      const request = httpMock.expectOne(`${environment.apiUrl}/campaigns/${campaignId}/npcs/${npcId}`);
+      const request = httpMock.expectOne(
+        `${environment.apiUrl}/campaigns/${campaignId}/npcs/${npcId}`,
+      );
 
       expect(request.request.method).toBe('DELETE');
 
       request.flush([]);
-    })
-  })
+    });
+  });
 });

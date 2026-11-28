@@ -23,13 +23,13 @@ export class CombatTracker implements OnInit {
   resetCounter = 0;
 
   combatTrackerService = inject(CombatTrackerService);
-  
-  private route = inject(ActivatedRoute);
-  campaignId = Number(
-    this.route.parent?.snapshot.paramMap.get('id')
-  );
 
-  npcData$ = signal<Observable<INpc[]>>(this.combatTrackerService.getAllNpcsForCampaign(this.campaignId));
+  private route = inject(ActivatedRoute);
+  campaignId = Number(this.route.parent?.snapshot.paramMap.get('id'));
+
+  npcData$ = signal<Observable<INpc[]>>(
+    this.combatTrackerService.getAllNpcsForCampaign(this.campaignId),
+  );
 
   ngOnInit() {
     this.refreshData();
@@ -38,7 +38,7 @@ export class CombatTracker implements OnInit {
   createNewNpc(npcDetails: INewNpcFormDetails) {
     const npcRequest: INewNpcRequest = {
       name: npcDetails.name,
-      hp: Number(npcDetails.hp)
+      hp: Number(npcDetails.hp),
     };
 
     this.combatTrackerService.createNewNpc(npcRequest, this.campaignId).subscribe({
@@ -49,7 +49,7 @@ export class CombatTracker implements OnInit {
       },
       error: (error) => {
         console.error(error);
-      }
+      },
     });
   }
 
@@ -83,7 +83,7 @@ export class CombatTracker implements OnInit {
       },
       error: (error) => {
         console.error(error);
-      }
+      },
     });
   }
 
@@ -99,7 +99,7 @@ export class CombatTracker implements OnInit {
       },
       error: (error) => {
         console.error(error);
-      }
+      },
     });
   }
 }

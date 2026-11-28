@@ -54,11 +54,11 @@ describe('CombatTracker', () => {
           useValue: {
             parent: {
               snapshot: {
-                paramMap: convertToParamMap({ id: campaignId })
-              }
-            }
-          }
-        }
+                paramMap: convertToParamMap({ id: campaignId }),
+              },
+            },
+          },
+        },
       ],
     }).compileComponents();
 
@@ -96,12 +96,15 @@ describe('CombatTracker', () => {
 
       const expectedNpcDetails: INewNpcRequest = {
         name: 'John',
-        hp: 15
+        hp: 15,
       };
 
       component.createNewNpc(mockNpcDetails);
 
-      expect(combatTrackerServiceMock.createNewNpc).toHaveBeenCalledWith(expectedNpcDetails, campaignId);
+      expect(combatTrackerServiceMock.createNewNpc).toHaveBeenCalledWith(
+        expectedNpcDetails,
+        campaignId,
+      );
     });
 
     it('should refresh the data after submission', () => {
@@ -210,7 +213,10 @@ describe('CombatTracker', () => {
 
       component.submitHpChanges();
 
-      expect(combatTrackerServiceMock.updateNpcHp).toHaveBeenCalledWith(expectedPayload, campaignId);
+      expect(combatTrackerServiceMock.updateNpcHp).toHaveBeenCalledWith(
+        expectedPayload,
+        campaignId,
+      );
     });
 
     it('should call resetFields and refreshData', () => {

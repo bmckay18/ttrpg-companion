@@ -1,6 +1,6 @@
 import { Component, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { CampaignListService } from './campaign-list-service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { NewCampaignForm } from './new-campaign-form/new-campaign-form';
 import { ICampaign } from './campaign-interface';
@@ -35,9 +35,8 @@ export class Campaign {
       },
       error: (err) => {
         console.error(err);
-      }
-    })
-
+      },
+    });
   }
 
   searchCampaigns(searchTerm: string) {

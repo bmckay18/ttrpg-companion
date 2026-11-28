@@ -21,7 +21,10 @@ export class CombatTrackerService {
   }
 
   updateNpcHp(hpChangedList: IHpChangeDto[], campaignId: number): Observable<void> {
-    return this.http.patch<void>(`${environment.apiUrl}/campaigns/${campaignId}/npcs/health`, hpChangedList);
+    return this.http.patch<void>(
+      `${environment.apiUrl}/campaigns/${campaignId}/npcs/health`,
+      hpChangedList,
+    );
   }
 
   deleteNpc(npcId: number, campaignId: number): Observable<void> {

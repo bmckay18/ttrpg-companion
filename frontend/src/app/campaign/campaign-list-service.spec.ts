@@ -12,10 +12,7 @@ describe('CampaignListService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        provideHttpClient(),
-        provideHttpClientTesting()
-      ]
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     });
     service = TestBed.inject(CampaignListService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -32,11 +29,11 @@ describe('CampaignListService', () => {
           name: 'Campaign 1',
           id: 1,
           creationDate: '2026-01-01',
-          modifiedDate: '2026-01-01'
-        }
+          modifiedDate: '2026-01-01',
+        },
       ];
 
-      service.getCampaignList('').subscribe(result => {
+      service.getCampaignList('').subscribe((result) => {
         expect(result).toEqual(mockCampaigns);
       });
 
@@ -52,8 +49,11 @@ describe('CampaignListService', () => {
 
       service.getCampaignList(searchTerm).subscribe();
 
-      const request = httpMock.expectOne(req => 
-        req.url === `${environment.apiUrl}/campaigns` && req.params.get('searchTerm') === searchTerm);
+      const request = httpMock.expectOne(
+        (req) =>
+          req.url === `${environment.apiUrl}/campaigns` &&
+          req.params.get('searchTerm') === searchTerm,
+      );
 
       request.flush([]);
     });
@@ -64,7 +64,7 @@ describe('CampaignListService', () => {
       const title = 'The Lich';
 
       const payload = {
-        name: title
+        name: title,
       };
 
       service.createCampaign(title).subscribe();

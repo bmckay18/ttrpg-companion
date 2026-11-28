@@ -13,8 +13,8 @@ export class CampaignListService {
   getCampaignList(searchTerm: string): Observable<ICampaign[]> {
     return this.http.get<ICampaign[]>(`${environment.apiUrl}/campaigns`, {
       params: {
-        searchTerm: searchTerm ?? ''
-      }
+        searchTerm: searchTerm ?? '',
+      },
     });
   }
 
@@ -24,7 +24,7 @@ export class CampaignListService {
     }
 
     const payload = {
-      name: title
+      name: title,
     };
 
     return this.http.post<void>(`${environment.apiUrl}/campaigns/create`, payload);

@@ -1,4 +1,4 @@
 export interface INewNpcRequest {
-    name: string,
-    hp: number
+  name: string;
+  hp: number;
 }
