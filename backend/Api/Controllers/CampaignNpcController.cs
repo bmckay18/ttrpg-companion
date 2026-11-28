@@ -30,11 +30,19 @@ namespace Api.Controllers
             return Created();
         }
 
-        [HttpPost]
-        [Route("{campaignId}/npcs/update")]
+        [HttpPatch]
+        [Route("{campaignId}/npcs/health")]
         public async Task<IActionResult> UpdateNpcHealthAsync([FromBody] IEnumerable<HealthUpdateRequestDto> request, int campaignId, CancellationToken cancellationToken)
         {
             await _combatTrackerService.UpdateNpcHealthAsync(request, campaignId, UserId, cancellationToken);
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [Route("{campaignId}/npcs/{npcId}")]
+        public async Task<IActionResult> DeleteNpcAsync(int campaignId, int npcId, CancellationToken cancellationToken)
+        {
+            await _combatTrackerService.DeleteNpcAsync(npcId, campaignId, UserId, cancellationToken);
             return NoContent();
         }
     }

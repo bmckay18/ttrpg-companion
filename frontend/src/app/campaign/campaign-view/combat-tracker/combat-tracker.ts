@@ -93,7 +93,13 @@ export class CombatTracker implements OnInit {
   }
 
   deleteNpc(id: number) {
-    this.combatTrackerService.deleteNpc(id);
-    this.refreshData();
+    this.combatTrackerService.deleteNpc(id, this.campaignId).subscribe({
+      next: () => {
+        this.refreshData();
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 }

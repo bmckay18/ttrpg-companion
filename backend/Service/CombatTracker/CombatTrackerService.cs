@@ -116,5 +116,27 @@ namespace Service.CombatTracker
 
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task DeleteNpcAsync(int npcId, int campaignId, Guid userId, CancellationToken cancellationToken)
+        {
+            if (!await _dbContext.Npcs.AnyAsync(x => x.Id == npcId, cancellationToken))
+            {
+                throw new ArgumentException("The NPC was not found.");
+            }
+
+            var targetNpc = await _dbContext.Npcs
+                .Join(_dbContext.Campaigns, outer => outer.CampaignId, inner => inner.Id, (outer, inner) => new
+                {
+                    Npcs = outer,
+                    inner.UserId
+                })
+                .Where(x => x.Npcs.Id == npcId && x.UserId == userId)
+                .Select(x => x.Npcs)
+                .FirstAsync(cancellationToken);
+
+            _dbContext.Npcs.Remove(targetNpc);
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
     }
 }

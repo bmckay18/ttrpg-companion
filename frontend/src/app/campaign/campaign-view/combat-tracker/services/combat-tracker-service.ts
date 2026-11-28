@@ -11,56 +11,6 @@ import { INewNpcRequest } from './new-npc-request';
 })
 export class CombatTrackerService {
   private http = inject(HttpClient);
-  private mockNpcData: INpc[] = [
-    {
-      id: 1,
-      name: 'Jonathan The Barbarian',
-      currentHp: 125,
-      maxHp: 150,
-    },
-    {
-      id: 2,
-      name: 'Jonathan The Barbarian',
-      currentHp: 125,
-      maxHp: 150,
-    },
-    {
-      id: 3,
-      name: 'Jonathan The Barbarian',
-      currentHp: 125,
-      maxHp: 150,
-    },
-    {
-      id: 4,
-      name: 'Jonathan The Barbarian',
-      currentHp: 125,
-      maxHp: 150,
-    },
-    {
-      id: 5,
-      name: 'Jonathan The Barbarian',
-      currentHp: 125,
-      maxHp: 150,
-    },
-    {
-      id: 6,
-      name: 'Jonathan The Barbarian',
-      currentHp: 125,
-      maxHp: 150,
-    },
-    {
-      id: 7,
-      name: 'Jonathan The Barbarian',
-      currentHp: 125,
-      maxHp: 150,
-    },
-    {
-      id: 8,
-      name: 'Jonathan The Barbarian',
-      currentHp: 125,
-      maxHp: 150,
-    },
-  ];
 
   getAllNpcsForCampaign(id: number): Observable<INpc[]> {
     return this.http.get<INpc[]>(`${environment.apiUrl}/campaigns/${id}/npcs`);
@@ -71,10 +21,10 @@ export class CombatTrackerService {
   }
 
   updateNpcHp(hpChangedList: IHpChangeDto[], campaignId: number): Observable<void> {
-    return this.http.post<void>(`${environment.apiUrl}/campaigns/${campaignId}/npcs/update`, hpChangedList);
+    return this.http.patch<void>(`${environment.apiUrl}/campaigns/${campaignId}/npcs/health`, hpChangedList);
   }
 
-  deleteNpc(id: number) {
-    console.log(id);
+  deleteNpc(npcId: number, campaignId: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/campaigns/${campaignId}/npcs/${npcId}`);
   }
 }
