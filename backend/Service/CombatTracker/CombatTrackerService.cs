@@ -128,9 +128,9 @@ namespace Service.CombatTracker
                 .Join(_dbContext.Campaigns, outer => outer.CampaignId, inner => inner.Id, (outer, inner) => new
                 {
                     Npcs = outer,
-                    inner.UserId
+                    inner.UserId,
                 })
-                .Where(x => x.Npcs.Id == npcId && x.UserId == userId)
+                .Where(x => x.Npcs.Id == npcId && x.UserId == userId && x.Npcs.CampaignId == campaignId)
                 .Select(x => x.Npcs)
                 .FirstAsync(cancellationToken);
 
