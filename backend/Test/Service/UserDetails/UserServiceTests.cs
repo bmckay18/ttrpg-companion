@@ -21,7 +21,6 @@ namespace Test.Service.UserDetails
 
             _dbContext = new AppDbContext(options);
 
-
             _service = new UserService(_dbContext);
         }
 

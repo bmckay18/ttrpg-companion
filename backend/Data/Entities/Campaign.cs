@@ -10,5 +10,6 @@ namespace Data.Entities
         public string Name { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime LastModifiedDate { get; set; }
+        public Guid UserId { get; set; }
     }
 }

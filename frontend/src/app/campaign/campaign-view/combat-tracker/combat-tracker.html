@@ -5,7 +5,7 @@
 </section>
 
 <section class="card-section">
-  @for (npc of npcData; track npc.id) {
+  @for (npc of npcData$() | async; track npc.id) {
     <app-npc-card
       [npcData]="npc"
       (hpChanged)="updateTrackedHpList($event)"

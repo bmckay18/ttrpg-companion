@@ -2,6 +2,8 @@ using Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Service.Campaigns;
+using Service.CombatTracker;
 using Service.UserDetails;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,6 +68,8 @@ builder.Services.AddCors(options =>
 
 // Add services to the container.
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICampaignListService, CampaignListService>();
+builder.Services.AddScoped<ICombatTrackerService, CombatTrackerService>();
 
 builder.Services.AddHealthChecks();
 

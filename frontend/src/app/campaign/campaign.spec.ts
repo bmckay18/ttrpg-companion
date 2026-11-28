@@ -9,7 +9,7 @@ describe('Campaign', () => {
   let fixture: ComponentFixture<Campaign>;
   const mockCampaignListService = {
     getCampaignList: vi.fn().mockReturnValue(of([])),
-    createCampaign: vi.fn(),
+    createCampaign: vi.fn().mockReturnValue(of([])),
   };
 
   beforeEach(async () => {

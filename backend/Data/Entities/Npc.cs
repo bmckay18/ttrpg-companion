@@ -10,5 +10,6 @@ namespace Data.Entities
         public string Name { get; set; }
         public int MaxHp { get; set; }
         public int CurrentHp { get; set; }
+        public int CampaignId { get; set; }
     }
 }
