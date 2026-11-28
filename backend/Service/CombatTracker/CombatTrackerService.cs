@@ -16,14 +16,7 @@ namespace Service.CombatTracker
 
         public async Task<IEnumerable<NpcDto>> GetNpcsAsync(int campaignId, Guid userId, CancellationToken cancellationToken)
         {
-            var canAccessCampaign = await _dbContext.Campaigns
-                .Where(x => x.UserId == userId && x.Id == campaignId)
-                .AnyAsync(cancellationToken);
-
-            if (!canAccessCampaign)
-            {
-                throw new InvalidOperationException("User does not have permission to access this campaign.");
-            }
+            await ValidateCampaignOwnershipAsync(campaignId, userId, cancellationToken);
 
             return await _dbContext.Npcs
                 .Where(x => x.CampaignId == campaignId)
@@ -39,14 +32,7 @@ namespace Service.CombatTracker
 
         public async Task CreateNpcAsync(NewNpcRequestDto requestData, int campaignId, Guid userId, CancellationToken cancellationToken)
         {
-            var canAccessCampaign = await _dbContext.Campaigns
-                .Where(x => x.UserId == userId && x.Id == campaignId)
-                .AnyAsync(cancellationToken);
-
-            if (!canAccessCampaign)
-            {
-                throw new InvalidOperationException("User does not have permission to access this campaign.");
-            }
+            await ValidateCampaignOwnershipAsync(campaignId, userId, cancellationToken);
 
             if (string.IsNullOrWhiteSpace(requestData.Name))
             {
@@ -84,15 +70,8 @@ namespace Service.CombatTracker
                 throw new ArgumentException("Duplicate NPC Ids are not allowed.");
             }
 
-            var accessibleNpcs = await _dbContext.Npcs
-                .Join(_dbContext.Campaigns, outer => outer.CampaignId, inner => inner.Id, (outer, inner) => new
-                {
-                    Npcs = outer,
-                    OwnerId = inner.UserId,
-                    CampaignId = inner.Id
-                })
-                .Where(x => x.OwnerId == userId && npcIds.Contains(x.Npcs.Id) && x.CampaignId == campaignId)
-                .Select(x => x.Npcs)
+            var accessibleNpcs = await GetAccessibleNpcsQuery(campaignId, userId, cancellationToken)
+                .Where(x => npcIds.Contains(x.Id))
                 .ToDictionaryAsync(x => x.Id, cancellationToken);
 
             foreach (var request in requestData)
@@ -124,19 +103,38 @@ namespace Service.CombatTracker
                 throw new ArgumentException("The NPC was not found.");
             }
 
-            var targetNpc = await _dbContext.Npcs
-                .Join(_dbContext.Campaigns, outer => outer.CampaignId, inner => inner.Id, (outer, inner) => new
-                {
-                    Npcs = outer,
-                    inner.UserId,
-                })
-                .Where(x => x.Npcs.Id == npcId && x.UserId == userId && x.Npcs.CampaignId == campaignId)
-                .Select(x => x.Npcs)
+            var targetNpc = await GetAccessibleNpcsQuery(campaignId, userId, cancellationToken)
+                .Where(x => x.Id == npcId)
                 .FirstAsync(cancellationToken);
 
             _dbContext.Npcs.Remove(targetNpc);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+
+        private async Task ValidateCampaignOwnershipAsync(int campaignId, Guid userId, CancellationToken cancellationToken)
+        {
+            var canAccessCampaign = await _dbContext.Campaigns
+                .Where(x => x.UserId == userId && x.Id == campaignId)
+                .AnyAsync(cancellationToken);
+
+            if (!canAccessCampaign)
+            {
+                throw new InvalidOperationException("User does not have permission to access this campaign.");
+            }
+        }
+
+        private IQueryable<Npc> GetAccessibleNpcsQuery(int campaignId, Guid userId, CancellationToken cancellationToken)
+        {
+            return _dbContext.Npcs
+                .Join(_dbContext.Campaigns, outer => outer.CampaignId, inner => inner.Id, (outer, inner) => new
+                {
+                    Npcs = outer,
+                    OwnerId = inner.UserId,
+                    CampaignId = inner.Id
+                })
+                .Where(x => x.OwnerId == userId && x.CampaignId == campaignId)
+                .Select(x => x.Npcs);
         }
     }
 }
