@@ -6,6 +6,9 @@ import { INewNpcFormDetails } from './new-npc-form/new-npc-form-details';
 import { INpc } from './interfaces/npc';
 import { INpcHpChange } from './interfaces/npc-hp-change';
 import { IHpChangeDto } from './interfaces/hp-change-dto';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { firstValueFrom, of } from 'rxjs';
+import { INewNpcRequest } from './services/new-npc-request';
 
 describe('CombatTracker', () => {
   let component: CombatTracker;
@@ -20,6 +23,8 @@ describe('CombatTracker', () => {
   let npcDataMock: INpc[];
   let modal: HTMLDialogElement | undefined;
 
+  const campaignId = 123;
+
   beforeEach(async () => {
     npcDataMock = [
       {
@@ -31,10 +36,10 @@ describe('CombatTracker', () => {
     ];
 
     combatTrackerServiceMock = {
-      getAllNpcsForCampaign: vi.fn().mockReturnValue(npcDataMock),
-      createNewNpc: vi.fn(),
-      updateNpcHp: vi.fn(),
-      deleteNpc: vi.fn(),
+      getAllNpcsForCampaign: vi.fn().mockReturnValue(of(npcDataMock)),
+      createNewNpc: vi.fn().mockReturnValue(of([])),
+      updateNpcHp: vi.fn().mockReturnValue(of([])),
+      deleteNpc: vi.fn().mockReturnValue(of([])),
     };
 
     await TestBed.configureTestingModule({
@@ -44,6 +49,16 @@ describe('CombatTracker', () => {
           provide: CombatTrackerService,
           useValue: combatTrackerServiceMock,
         },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            parent: {
+              snapshot: {
+                paramMap: convertToParamMap({ id: campaignId })
+              }
+            }
+          }
+        }
       ],
     }).compileComponents();
 
@@ -79,16 +94,14 @@ describe('CombatTracker', () => {
         hp: '15',
       };
 
-      const expectedNpcDetails: INpc = {
+      const expectedNpcDetails: INewNpcRequest = {
         name: 'John',
-        maxHp: 15,
-        currentHp: 15,
-        id: 2,
+        hp: 15
       };
 
       component.createNewNpc(mockNpcDetails);
 
-      expect(combatTrackerServiceMock.createNewNpc).toHaveBeenCalledWith(expectedNpcDetails);
+      expect(combatTrackerServiceMock.createNewNpc).toHaveBeenCalledWith(expectedNpcDetails, campaignId);
     });
 
     it('should refresh the data after submission', () => {
@@ -117,7 +130,7 @@ describe('CombatTracker', () => {
   });
 
   describe('refreshData', () => {
-    it('should call the combat tracker service and assign result to npcData', () => {
+    it('should call the combat tracker service and assign result to npcData', async () => {
       const npcData: INpc[] = [
         {
           id: 1,
@@ -133,12 +146,15 @@ describe('CombatTracker', () => {
         },
       ];
 
-      combatTrackerServiceMock.getAllNpcsForCampaign = vi.fn().mockReturnValue(npcData);
+      combatTrackerServiceMock.getAllNpcsForCampaign = vi.fn().mockReturnValue(of(npcData));
 
       component.refreshData();
 
       expect(combatTrackerServiceMock.getAllNpcsForCampaign).toHaveBeenCalled();
-      expect(component.npcData.length).toBe(2);
+
+      const result = await firstValueFrom(component.npcData$());
+
+      expect(result.length).toBe(2);
     });
   });
 
@@ -194,7 +210,7 @@ describe('CombatTracker', () => {
 
       component.submitHpChanges();
 
-      expect(combatTrackerServiceMock.updateNpcHp).toHaveBeenCalledWith(expectedPayload);
+      expect(combatTrackerServiceMock.updateNpcHp).toHaveBeenCalledWith(expectedPayload, campaignId);
     });
 
     it('should call resetFields and refreshData', () => {
@@ -226,7 +242,7 @@ describe('CombatTracker', () => {
 
       component.deleteNpc(5);
 
-      expect(combatTrackerServiceMock.deleteNpc).toHaveBeenCalledWith(5);
+      expect(combatTrackerServiceMock.deleteNpc).toHaveBeenCalledWith(5, campaignId);
       expect(refreshDataSpy).toHaveBeenCalled();
     });
   });

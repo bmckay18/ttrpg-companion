@@ -19,7 +19,7 @@ export class CampaignListService {
   }
 
   createCampaign(title: string): Observable<void> {
-    if (title.length < 5 || title == null) {
+    if (title.length < 5) {
       throw new Error('The title must be greater than 5 characters');
     }
 
